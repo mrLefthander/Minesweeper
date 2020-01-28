@@ -7,7 +7,7 @@ public class Map
 {
     public event EventHandler OnEntireMapRevealed;
     private Grid<MapGridObject> grid;
-    private int minesPlaced = 0;
+    private int minesCount = 0;
     private int revealedCellsCount = 0;
     private int flaggedCellsCount = 0;
 
@@ -15,7 +15,7 @@ public class Map
     {
         grid = new Grid<MapGridObject>(10, 10, 10f, new Vector3(-50, -55, 0), (Grid<MapGridObject> g, int x, int y) => new MapGridObject(g, x, y));
 
-        while (minesPlaced < 10)
+        while (minesCount < 10)
         {
             int x = UnityEngine.Random.Range(0, grid.GetWidth());
             int y = UnityEngine.Random.Range(0, grid.GetHeight());
@@ -24,7 +24,7 @@ public class Map
             if (mapGridObject.GetGridObjectType() != MapGridObject.Type.Mine)
             {
                 mapGridObject.SetGridObjectType(MapGridObject.Type.Mine);
-                minesPlaced++;
+                minesCount++;
             }
         }
 
@@ -147,21 +147,14 @@ public class Map
         }
         if (IsEntireMapRevealed())
         {
-
             OnEntireMapRevealed?.Invoke(this, EventArgs.Empty);
         }
     }
 
     public bool IsEntireMapRevealed()
     {
-        int gridCellsCount = grid.GetWidth() * grid.GetHeight();
-        int emptyCellsCount = gridCellsCount - minesPlaced;
-        Debug.Log("revealedCellsCount: " + revealedCellsCount + "\nemptyCellsCount: " + emptyCellsCount + "\nflaggedCellsCount: " + flaggedCellsCount + "\nminesPlaced: " + minesPlaced);
-        if (revealedCellsCount == emptyCellsCount && flaggedCellsCount == minesPlaced)
-        {
-            return true;
-        }
-        return false;
+        int emptyCellsCount = grid.GetWidth() * grid.GetHeight() - minesCount;
+        return (revealedCellsCount == emptyCellsCount && flaggedCellsCount == minesCount) ? true : false;
     }
 
     public void RevealEntireMap()

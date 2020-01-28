@@ -10,7 +10,11 @@ public class GridPrefabVisual : MonoBehaviour
     [SerializeField] private Sprite flagSprite;
     [SerializeField] private Sprite mineSprite;
 
+    //constants for string refs
     const string GRID_OBJECTS_PARENT_NAME = "Grid";
+    const string GRID_OBJECT_ICON_SPRITE_NAME = "IconSprite";
+    const string GRID_OBJECT_MINE_INDICATOR_NAME = "MineText";
+    const string GRID_OBJECT_TOP_SPRITE_NAME = "TopSprite";
 
     GameObject gridParent;
     private Grid<MapGridObject> grid;
@@ -88,9 +92,9 @@ public class GridPrefabVisual : MonoBehaviour
 
     private void SetupVisualNode(Transform visualNode, MapGridObject mapGridObject)
     {
-        SpriteRenderer iconSpriteRenderer = visualNode.Find("IconSprite").GetComponent<SpriteRenderer>();
-        TextMeshPro indicatorText = visualNode.Find("MineText").GetComponent<TextMeshPro>();
-        Transform nodeTopTransform = visualNode.Find("TopSprite");
+        SpriteRenderer iconSpriteRenderer = visualNode.Find(GRID_OBJECT_ICON_SPRITE_NAME).GetComponent<SpriteRenderer>();
+        TextMeshPro indicatorText = visualNode.Find(GRID_OBJECT_MINE_INDICATOR_NAME).GetComponent<TextMeshPro>();
+        Transform nodeTopTransform = visualNode.Find(GRID_OBJECT_TOP_SPRITE_NAME);
 
         if(mapGridObject.IsRevealed() || revealMap)
         {
