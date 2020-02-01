@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HighscoreTable: MonoBehaviour
 {
@@ -12,8 +13,6 @@ public class HighscoreTable: MonoBehaviour
     private const string HIGHSCORE_TEMPLATE_RANK_TEXT_NAME = "rankText";
     private const string HIGHSCORE_TEMPLATE_SCORE_TEXT_NAME = "scoreText";
     private const string HIGHSCORE_TEMPLATE_NAME_TEXT_NAME = "nameText";
-    private const string HIGHSCORE_TEMPLATE_BACKGOUND_NAME = "highscoreEntryBackground";
-    private const string HIGHSCORE_TEMPLATE_TROPHY_NAME = "trophy";
 
     private Transform entryContainer;
     private Transform entryTemplate;
@@ -25,16 +24,8 @@ public class HighscoreTable: MonoBehaviour
         entryTemplate = entryContainer.Find(HIGHSCORE_TEMPLATE_OBJECT_NAME);
 
         entryTemplate.gameObject.SetActive(false);
-                
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
-        highscores.highscoreEntryList.Sort();
-        highscoreEntryTransformList = new List<Transform>();
-        foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
-        {
-            CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
-        }
+        FormHighscoreTable();
     }
 
     private void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
@@ -47,62 +38,81 @@ public class HighscoreTable: MonoBehaviour
         Transform rankTransform = entryTransform.Find(HIGHSCORE_TEMPLATE_RANK_TEXT_NAME);
         Transform scoreTransform = entryTransform.Find(HIGHSCORE_TEMPLATE_SCORE_TEXT_NAME);
         Transform nameTransform = entryTransform.Find(HIGHSCORE_TEMPLATE_NAME_TEXT_NAME);
-        Transform backgroundTransform = entryTransform.Find(HIGHSCORE_TEMPLATE_BACKGOUND_NAME);
-        Transform trophyTransform = entryTransform.Find(HIGHSCORE_TEMPLATE_TROPHY_NAME);
-        
-
 
         int rank = transformList.Count + 1;
 
-        rankTransform.GetComponent<Text>().text = rank.ToString();
-        scoreTransform.GetComponent<Text>().text = highscoreEntry.score.ToString();
-        nameTransform.GetComponent<Text>().text = highscoreEntry.name.ToUpper();
-        //backgroundTransform.gameObject.SetActive(rank % 2 == 1);
+        rankTransform.GetComponent<TMP_Text>().text = rank.ToString();
+        scoreTransform.GetComponent<TMP_Text>().text = highscoreEntry.score.ToString();
+        nameTransform.GetComponent<TMP_Text>().text = highscoreEntry.name.ToUpper();
 
         if(rank == 1)
         {
-            //trophyTransform.gameObject.SetActive(true);
-            rankTransform.GetComponent<Text>().fontStyle = FontStyle.Bold;
-            rankTransform.GetComponent<Text>().color = Color.white;
+            Color leaderColor = new Color32(100, 255, 218, 255);
+            rankTransform.GetComponent<TMP_Text>().fontStyle = FontStyles.Bold;
+            rankTransform.GetComponent<TMP_Text>().color = leaderColor;
 
-            scoreTransform.GetComponent<Text>().fontStyle = FontStyle.Bold;
-            scoreTransform.GetComponent<Text>().color = Color.white;
+            scoreTransform.GetComponent<TMP_Text>().fontStyle = FontStyles.Bold;
+            scoreTransform.GetComponent<TMP_Text>().color = leaderColor;
 
-            nameTransform.GetComponent<Text>().fontStyle = FontStyle.Bold;
-            nameTransform.GetComponent<Text>().color = Color.white;
+            nameTransform.GetComponent<TMP_Text>().fontStyle = FontStyles.Bold;
+            nameTransform.GetComponent<TMP_Text>().color = leaderColor;
         }
-
-/*        switch (rank)
-        {
-            default:
-                trophyTransform.gameObject.SetActive(false);
-                break;
-            case 1:
-                trophyTransform.GetComponent<Image>().color = new Color32(212, 175, 55, 255);
-                break;
-            case 2:
-                trophyTransform.GetComponent<Image>().color = new Color32(169, 169, 169, 255);
-                break;
-            case 3:
-                trophyTransform.GetComponent<Image>().color = new Color32(205, 127, 50, 255);
-                break;
-        }*/
 
         transformList.Add(entryTransform);
     }
 
-    private void AddHighscoreEntry(int score, string name)
+    public bool IsHighscore(int score)
+    {
+        Highscores highscores = GetHighscores();
+        int numOfHighscores = highscores.highscoreEntryList.Count;
+        if (numOfHighscores <= 10 || score < highscores.highscoreEntryList[numOfHighscores - 1].score)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void AddHighscoreEntry(int score, string name)
     {
         HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = name };
 
-        string jsonString = PlayerPrefs.GetString(HIGHSCORE_PLAYERPREFS_KEY);
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+        Highscores highscores = GetHighscores();
 
         highscores.highscoreEntryList.Add(highscoreEntry);
+        highscores.highscoreEntryList.Sort();
 
+        int numOfHighscores = highscores.highscoreEntryList.Count;
+        Debug.Log(numOfHighscores);
+        if (numOfHighscores > 10)
+        {
+            highscores.highscoreEntryList.RemoveRange(9, numOfHighscores - 10);
+        }
+
+        SaveHighscores(highscores);
+    }
+
+    private void SaveHighscores(Highscores highscores)
+    {
         string json = JsonUtility.ToJson(highscores);
         PlayerPrefs.SetString(HIGHSCORE_PLAYERPREFS_KEY, json);
         PlayerPrefs.Save();
+    }
+
+    private Highscores GetHighscores()
+    {
+        string jsonString = PlayerPrefs.GetString(HIGHSCORE_PLAYERPREFS_KEY);
+        return JsonUtility.FromJson<Highscores>(jsonString);
+    }
+
+    private void FormHighscoreTable()
+    {
+        Highscores highscores = GetHighscores();
+
+        highscoreEntryTransformList = new List<Transform>();
+        foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
+        {
+            CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
+        }
     }
 
     [Serializable]

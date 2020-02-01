@@ -15,29 +15,22 @@ public class Map
     {
         grid = new Grid<MapGridObject>(10, 10, 10f, new Vector3(-50, -55, 0), (Grid<MapGridObject> g, int x, int y) => new MapGridObject(g, x, y));
 
-        while (minesCount < 10)
-        {
-            int x = UnityEngine.Random.Range(0, grid.GetWidth());
-            int y = UnityEngine.Random.Range(0, grid.GetHeight());
+        PlaceMines(1);
+        PlaceMinesIndicators();
+    }
 
-            MapGridObject mapGridObject = grid.GetGridObject(x, y);
-            if (mapGridObject.GetGridObjectType() != MapGridObject.Type.Mine)
-            {
-                mapGridObject.SetGridObjectType(MapGridObject.Type.Mine);
-                minesCount++;
-            }
-        }
-
+    private void PlaceMinesIndicators()
+    {
         for (int x = 0; x < grid.GetWidth(); x++)
         {
             for (int y = 0; y < grid.GetHeight(); y++)
             {
                 MapGridObject mapGridObject = grid.GetGridObject(x, y);
-                if(mapGridObject.GetGridObjectType() == MapGridObject.Type.Empty)
+                if (mapGridObject.GetGridObjectType() == MapGridObject.Type.Empty)
                 {
                     List<MapGridObject> neighbourList = GetNeighbourList(x, y);
                     int mineCount = 0;
-                    foreach(MapGridObject neighbour in neighbourList)
+                    foreach (MapGridObject neighbour in neighbourList)
                     {
                         if (neighbour.GetGridObjectType() == MapGridObject.Type.Mine)
                         {
@@ -45,7 +38,7 @@ public class Map
                         }
                     }
 
-                    switch(mineCount)
+                    switch (mineCount)
                     {
                         case 1: mapGridObject.SetGridObjectType(MapGridObject.Type.MineNum_1); break;
                         case 2: mapGridObject.SetGridObjectType(MapGridObject.Type.MineNum_2); break;
@@ -57,6 +50,22 @@ public class Map
                         case 8: mapGridObject.SetGridObjectType(MapGridObject.Type.MineNum_8); break;
                     }
                 }
+            }
+        }
+    }
+
+    private void PlaceMines(int minesToPlace)
+    {
+        while (minesCount < minesToPlace)
+        {
+            int x = UnityEngine.Random.Range(0, grid.GetWidth());
+            int y = UnityEngine.Random.Range(0, grid.GetHeight());
+
+            MapGridObject mapGridObject = grid.GetGridObject(x, y);
+            if (mapGridObject.GetGridObjectType() != MapGridObject.Type.Mine)
+            {
+                mapGridObject.SetGridObjectType(MapGridObject.Type.Mine);
+                minesCount++;
             }
         }
     }
@@ -115,7 +124,6 @@ public class Map
         }
         if (IsEntireMapRevealed())
         {
-
             OnEntireMapRevealed?.Invoke(this, EventArgs.Empty);
         }
         return mapGridObject.GetGridObjectType();
@@ -157,11 +165,15 @@ public class Map
         return (revealedCellsCount == emptyCellsCount && flaggedCellsCount == minesCount) ? true : false;
     }
 
-    public void RevealEntireMap()
+    public IEnumerator RevealEntireMap(float totalDelay)
     {
-        for (int x = 0; x < grid.GetWidth(); x++)
+        float delayStep = totalDelay / (grid.GetWidth() + 3f);
+        float delay = delayStep * 3;
+        for (int y = 0; y < grid.GetWidth(); y++)
         {
-            for (int y = 0; y < grid.GetHeight(); y++)
+            yield return new WaitForSeconds(delay);
+            delay = delayStep;
+            for (int x = 0; x < grid.GetHeight(); x++)
             {
                 MapGridObject mapGridObject = grid.GetGridObject(x, y);
                 mapGridObject.Reveal();

@@ -10,9 +10,12 @@ public class MinesweeperGameHandler : MonoBehaviour
     private Map map;
     private float timer;
     private bool isGameActive;
+    private UIHandler uiHandler;
 
     void Start()
     {
+        uiHandler = FindObjectOfType<UIHandler>();
+
         map = new Map();
         gridPrefabVisual.Setup(map.GetGrid());
         isGameActive = true;
@@ -22,40 +25,45 @@ public class MinesweeperGameHandler : MonoBehaviour
 
     private void Map_OnEntireMapRevealed(object sender, EventArgs e)
     {
-        Debug.Log("Win!");
         isGameActive = false;
         int timeScore = Mathf.FloorToInt(timer);
+
+        StartCoroutine(uiHandler.WinCoroutine(timeScore));
     }
 
     void Update()
     {
-        Vector3 position = GetMouseWorldPosition();
-        if (Input.GetMouseButtonDown(0))
+        if (isGameActive)
         {
-            
-            MapGridObject.Type gridObjectType =  map.RevealGridPosition(position);
-            if(gridObjectType == MapGridObject.Type.Mine)
+
+            Vector3 position = GetMouseWorldPosition();
+            if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("GameOver");
-                isGameActive = false;
-                map.RevealEntireMap();
+
+                MapGridObject.Type gridObjectType = map.RevealGridPosition(position);
+                if (gridObjectType == MapGridObject.Type.Mine)
+                {
+                    isGameActive = false;
+                    StartCoroutine(map.RevealEntireMap(1.3f));
+                    StartCoroutine(uiHandler.LoseCoroutine(1.3f));
+                }
             }
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            map.ChangeFlaggedStateOnGridPosition(position);
-        }
+            if (Input.GetMouseButtonDown(1))
+            {
+                map.ChangeFlaggedStateOnGridPosition(position);
+            }
 
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            gridPrefabVisual.SetRevealMap(true);
-        }
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            gridPrefabVisual.SetRevealMap(false);
-        }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                gridPrefabVisual.SetRevealMap(true);
+            }
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                gridPrefabVisual.SetRevealMap(false);
+            }
 
-        HandleTimer();
+            HandleTimer();
+        }
     }
 
     private Vector3 GetMouseWorldPosition()
