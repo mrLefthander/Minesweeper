@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 public class InputWindow : MonoBehaviour
 {
-    [SerializeField] private HighscoreTable highscoreTable;
+    private HighscoreTable highscoreTable;
     private TMP_InputField inputField;
     private Button okButton;
     private Button cancelButton;
@@ -21,7 +21,7 @@ public class InputWindow : MonoBehaviour
         cancelButton = transform.Find("cancelButton").GetComponent<Button>();
         inputField = transform.Find("inputField").GetComponent<TMP_InputField>();
         highscoreText = transform.Find("highscoreText").GetComponent<TMP_Text>();
-       // Hide();
+        highscoreTable = GameObject.Find("HighscoreTable").GetComponent<HighscoreTable>();
     }
     private void Update()
     {

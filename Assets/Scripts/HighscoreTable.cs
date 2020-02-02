@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class HighscoreTable: MonoBehaviour
@@ -30,7 +29,7 @@ public class HighscoreTable: MonoBehaviour
 
     private void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
     {
-        float templateHeight = 35f;
+        float templateHeight = 48f;
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entrryRectTransform = entryTransform.GetComponent<RectTransform>();
         entrryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
@@ -82,10 +81,9 @@ public class HighscoreTable: MonoBehaviour
         highscores.highscoreEntryList.Sort();
 
         int numOfHighscores = highscores.highscoreEntryList.Count;
-        Debug.Log(numOfHighscores);
         if (numOfHighscores > 10)
         {
-            highscores.highscoreEntryList.RemoveRange(9, numOfHighscores - 10);
+            highscores.highscoreEntryList.RemoveRange(10, numOfHighscores - 10);
         }
 
         SaveHighscores(highscores);

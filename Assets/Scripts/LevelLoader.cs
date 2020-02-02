@@ -22,7 +22,7 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadHighscoreMenu()
     {
-        SceneManager.LoadScene("Highscore Screen");
+        SceneManager.LoadScene("Highscores Screen");
     }
 
     public void QuitGame()
