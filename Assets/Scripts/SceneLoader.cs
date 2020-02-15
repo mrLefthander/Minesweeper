@@ -3,30 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
+    private void PlayClickSound()
+    {
+        AudioManager.instance.PlaySound(Sound.Type.ButtonClick);
+    }
+
     public void LoadMainMenu()
     {
+        PlayClickSound();
         SceneManager.LoadScene("Main Menu");
     }
 
     public void LoadGameplay()
     {
+        PlayClickSound();
         SceneManager.LoadScene("Gameplay Scene");
     }
 
-    public void LoadOptionsMenu()
+    public void LoadSettingsMenu()
     {
-        SceneManager.LoadScene("Options Screen");
+        PlayClickSound();
+        SceneManager.LoadScene("Settings Screen");
     }
 
     public void LoadHighscoreMenu()
     {
+        PlayClickSound();
         SceneManager.LoadScene("Highscores Screen");
     }
 
     public void QuitGame()
     {
+        PlayClickSound();
         Application.Quit();
     }
 }

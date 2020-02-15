@@ -10,15 +10,18 @@ public class MinesweeperGameHandler : MonoBehaviour
     private Map map;
     private float timer;
     private bool isGameActive;
+    private bool isPaused;
     private UIHandler uiHandler;
 
     void Start()
     {
         uiHandler = FindObjectOfType<UIHandler>();
 
-        map = new Map();
+        GameValuesController.instance.GetGameValues(out Vector2Int mapDimensions, out int minesToPlace);
+        map = new Map(mapDimensions, minesToPlace);
         gridPrefabVisual.Setup(map.GetGrid());
         isGameActive = true;
+        isPaused = false;
 
         map.OnEntireMapRevealed += Map_OnEntireMapRevealed;
     }
@@ -35,35 +38,50 @@ public class MinesweeperGameHandler : MonoBehaviour
     {
         if (isGameActive)
         {
-
-            Vector3 position = GetMouseWorldPosition();
-            if (Input.GetMouseButtonDown(0))
+            if (!isPaused)
             {
-
-                MapGridObject.Type gridObjectType = map.RevealGridPosition(position);
-                if (gridObjectType == MapGridObject.Type.Mine)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    isGameActive = false;
-                    StartCoroutine(map.RevealEntireMap(1.3f));
-                    StartCoroutine(uiHandler.LoseCoroutine(1.3f));
+                    Vector3 position = GetMouseWorldPosition();
+                    MapGridObject.Type gridObjectType = map.RevealGridPosition(position);
+                    if (gridObjectType == MapGridObject.Type.Mine)
+                    {
+                        isGameActive = false;
+                        StartCoroutine(map.RevealEntireMap(2f));
+                        StartCoroutine(uiHandler.LoseCoroutine(2f));
+                    }
                 }
-            }
-            if (Input.GetMouseButtonDown(1))
-            {
-                map.ChangeFlaggedStateOnGridPosition(position);
+                if (Input.GetMouseButtonDown(1))
+                {
+                    Vector3 position = GetMouseWorldPosition();
+                    map.ChangeFlaggedStateOnGridPosition(position);
+                }
+
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    gridPrefabVisual.SetRevealMap(true);
+                }
+                if (Input.GetKeyUp(KeyCode.D))
+                {
+                    gridPrefabVisual.SetRevealMap(false);
+                }
+
+                HandleTimer();
             }
 
-            if (Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Pause))
             {
-                gridPrefabVisual.SetRevealMap(true);
+                ChangePauseState();
             }
-            if (Input.GetKeyUp(KeyCode.D))
-            {
-                gridPrefabVisual.SetRevealMap(false);
-            }
-
-            HandleTimer();
         }
+
+    }
+
+    public void ChangePauseState()
+    {
+        AudioManager.instance.PlaySound(Sound.Type.ButtonClick);
+        isPaused = !isPaused;
+        uiHandler.ShowPauseWindow(isPaused);
     }
 
     private Vector3 GetMouseWorldPosition()

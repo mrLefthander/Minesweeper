@@ -6,7 +6,6 @@ using TMPro;
 
 public class HighscoreTable: MonoBehaviour
 {
-    private const string HIGHSCORE_PLAYERPREFS_KEY = "highscoreTable";
     private const string HIGHSCORE_CONTAINER_OBJECT_NAME = "highscoreEntryContainer";
     private const string HIGHSCORE_TEMPLATE_OBJECT_NAME = "highscoreEntry";
     private const string HIGHSCORE_TEMPLATE_RANK_TEXT_NAME = "rankText";
@@ -16,18 +15,21 @@ public class HighscoreTable: MonoBehaviour
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<Transform> highscoreEntryTransformList;
+    private HighscoreHandler highscoreHandler;
 
     private void Awake()
     {
         entryContainer = transform.Find(HIGHSCORE_CONTAINER_OBJECT_NAME);
         entryTemplate = entryContainer.Find(HIGHSCORE_TEMPLATE_OBJECT_NAME);
 
+        highscoreHandler = FindObjectOfType<HighscoreHandler>();
+
         entryTemplate.gameObject.SetActive(false);
 
         FormHighscoreTable();
     }
 
-    private void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
+    private void CreateHighscoreEntryTransform(HighscoreHandler.HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
     {
         float templateHeight = 48f;
         Transform entryTransform = Instantiate(entryTemplate, container);
@@ -60,73 +62,15 @@ public class HighscoreTable: MonoBehaviour
         transformList.Add(entryTransform);
     }
 
-    public bool IsHighscore(int score)
-    {
-        Highscores highscores = GetHighscores();
-        int numOfHighscores = highscores.highscoreEntryList.Count;
-        if (numOfHighscores <= 10 || score < highscores.highscoreEntryList[numOfHighscores - 1].score)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public void AddHighscoreEntry(int score, string name)
-    {
-        HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = name };
-
-        Highscores highscores = GetHighscores();
-
-        highscores.highscoreEntryList.Add(highscoreEntry);
-        highscores.highscoreEntryList.Sort();
-
-        int numOfHighscores = highscores.highscoreEntryList.Count;
-        if (numOfHighscores > 10)
-        {
-            highscores.highscoreEntryList.RemoveRange(10, numOfHighscores - 10);
-        }
-
-        SaveHighscores(highscores);
-    }
-
-    private void SaveHighscores(Highscores highscores)
-    {
-        string json = JsonUtility.ToJson(highscores);
-        PlayerPrefs.SetString(HIGHSCORE_PLAYERPREFS_KEY, json);
-        PlayerPrefs.Save();
-    }
-
-    private Highscores GetHighscores()
-    {
-        string jsonString = PlayerPrefs.GetString(HIGHSCORE_PLAYERPREFS_KEY);
-        return JsonUtility.FromJson<Highscores>(jsonString);
-    }
-
     private void FormHighscoreTable()
     {
-        Highscores highscores = GetHighscores();
+        List<HighscoreHandler.HighscoreEntry> highscoreEntryList = highscoreHandler.GetHighscoresList();
 
         highscoreEntryTransformList = new List<Transform>();
-        foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
+        foreach (HighscoreHandler.HighscoreEntry highscoreEntry in highscoreEntryList)
         {
             CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
         }
     }
 
-    [Serializable]
-    private class HighscoreEntry : IComparable<HighscoreEntry>
-    {
-        public int score;
-        public string name;
-
-        public int CompareTo(HighscoreEntry other)
-        {
-            return this.score.CompareTo(other.score);
-        }
-    }
-
-    private class Highscores
-    {
-        public List<HighscoreEntry> highscoreEntryList;
-    }
 }

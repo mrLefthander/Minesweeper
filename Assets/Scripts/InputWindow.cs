@@ -6,14 +6,14 @@ using TMPro;
 using System;
 using System.Text.RegularExpressions;
 
-public class InputWindow : MonoBehaviour
+public class InputWindow: MonoBehaviour
 {
-    private HighscoreTable highscoreTable;
     private TMP_InputField inputField;
     private Button okButton;
     private Button cancelButton;
     private TMP_Text highscoreText;
     private int score;
+    private HighscoreHandler highscoreHandler;
 
     private void Awake()
     {
@@ -21,11 +21,11 @@ public class InputWindow : MonoBehaviour
         cancelButton = transform.Find("cancelButton").GetComponent<Button>();
         inputField = transform.Find("inputField").GetComponent<TMP_InputField>();
         highscoreText = transform.Find("highscoreText").GetComponent<TMP_Text>();
-        highscoreTable = GameObject.Find("HighscoreTable").GetComponent<HighscoreTable>();
+        highscoreHandler = FindObjectOfType<HighscoreHandler>();
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             onOk(score, inputField.text);
         }
@@ -39,11 +39,14 @@ public class InputWindow : MonoBehaviour
     {
         this.score = score;
         gameObject.SetActive(true);
+
         inputField.characterLimit = 3;
         inputField.onValidateInput = ValidateInput;
-        highscoreText.text = score.ToString();        
+        highscoreText.text = score.ToString();
+
         okButton.onClick.AddListener(() => onOk(score, inputField.text));
         cancelButton.onClick.AddListener(onCancel);
+
         transform.SetAsLastSibling();
     }
 
@@ -53,27 +56,19 @@ public class InputWindow : MonoBehaviour
         {
             return addedChar;
         }
-        else
-        {
-            return '\0';
-        }
-    }
-
-    public void Hide()
-    {
-        gameObject.SetActive(false);
+        return '\0';
     }
 
     public void onOk(int score, string name)
     {
-        Hide();
-        highscoreTable.AddHighscoreEntry(score, name);
+        highscoreHandler.AddHighscoreEntry(score, name);
+        gameObject.SetActive(false);
     }
 
     public void onCancel()
     {
-        Hide();
+        gameObject.SetActive(false);
     }
 
-  
+
 }

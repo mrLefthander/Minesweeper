@@ -41,7 +41,7 @@ public class Grid<TGridObject> {
             ShowDebugGrid(width, height, cellSize);
         }
     }
-    
+
     public int GetWidth() { return width; }
     public int GetHeight() { return height; }
     public float GetCellSize() { return cellSize; }
@@ -85,10 +85,7 @@ public class Grid<TGridObject> {
         {
             return gridArray[x, y];
         }
-        else
-        {
-            return default(TGridObject);
-        }
+        return default(TGridObject);
     }
 
     public TGridObject GetGridObject(Vector3 worldPosition)

@@ -11,11 +11,11 @@ public class Map
     private int revealedCellsCount = 0;
     private int flaggedCellsCount = 0;
 
-    public Map()
+    public Map(Vector2Int mapDimesions, int minesToPlace)
     {
-        grid = new Grid<MapGridObject>(10, 10, 10f, new Vector3(-50, -55, 0), (Grid<MapGridObject> g, int x, int y) => new MapGridObject(g, x, y));
+        grid = new Grid<MapGridObject>(mapDimesions.x, mapDimesions.y, 2f, new Vector3(-mapDimesions.x, -mapDimesions.y - 1, 0), (Grid<MapGridObject> g, int x, int y) => new MapGridObject(g, x, y));
 
-        PlaceMines(1);
+        PlaceMines(minesToPlace);
         PlaceMinesIndicators();
     }
 
@@ -73,7 +73,7 @@ public class Map
     public MapGridObject.Type RevealGridPosition(Vector3 position)
     {
         MapGridObject mapGridObject = grid.GetGridObject(position);
-        if (mapGridObject != null)
+        if (mapGridObject != null && !mapGridObject.IsRevealed())
         {
             return RevealGridPosition(mapGridObject);
         }
@@ -82,6 +82,7 @@ public class Map
 
     public MapGridObject.Type RevealGridPosition(MapGridObject mapGridObject)
     {
+        AudioManager.instance.PlayRevealSound(mapGridObject.GetGridObjectType());
         //Reveal this object
         RevealGridObject(mapGridObject);
         //Is this an Empty grid object?
@@ -106,17 +107,12 @@ public class Map
                 //Cycle through all neighbours
                 foreach (MapGridObject neighbour in GetNeighbourList(checkMapGridObject))
                 {
-                    if (neighbour.GetGridObjectType() != MapGridObject.Type.Mine)
+                    RevealGridObject(neighbour);
+                    if (neighbour.GetGridObjectType() == MapGridObject.Type.Empty)
                     {
-                        //Reveal if not a Mine
-                        RevealGridObject(neighbour);
-                        if (neighbour.GetGridObjectType() == MapGridObject.Type.Empty)
+                        if (!alreadyCheckedNeighbourList.Contains(neighbour) && !checkNeighbourList.Contains(neighbour))
                         {
-                            if (!alreadyCheckedNeighbourList.Contains(neighbour))
-                            {
-                                //If Empty and not checked yet add it to queue
-                                checkNeighbourList.Add(neighbour);
-                            }
+                            checkNeighbourList.Add(neighbour);
                         }
                     }
                 }
@@ -137,12 +133,13 @@ public class Map
             revealedCellsCount++;
         }
     }
-    
+
     public void ChangeFlaggedStateOnGridPosition(Vector3 worldPosition)
     {
         MapGridObject mapGridObject = grid.GetGridObject(worldPosition);
         if (mapGridObject != null && !mapGridObject.IsRevealed())
         {
+            AudioManager.instance.PlaySound(Sound.Type.FlagCell);
             mapGridObject.ChangeFlaggedState();
             if (mapGridObject.IsFlagged())
             {
@@ -165,13 +162,17 @@ public class Map
         return (revealedCellsCount == emptyCellsCount && flaggedCellsCount == minesCount) ? true : false;
     }
 
+
+
     public IEnumerator RevealEntireMap(float totalDelay)
     {
-        float delayStep = totalDelay / (grid.GetWidth() + 3f);
-        float delay = delayStep * 3;
+        float delayStep = totalDelay / (grid.GetWidth() + 5f);
+        float delay = delayStep * 4f;
+
         for (int y = 0; y < grid.GetWidth(); y++)
         {
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
+            AudioManager.instance.PlaySound(Sound.Type.MapReveal);
             delay = delayStep;
             for (int x = 0; x < grid.GetHeight(); x++)
             {
@@ -179,6 +180,9 @@ public class Map
                 mapGridObject.Reveal();
             }
         }
+        yield return new WaitForSecondsRealtime(delayStep);
+        AudioManager.instance.PlaySound(Sound.Type.GameLose);
+
     }
 
     private List<MapGridObject> GetNeighbourList(MapGridObject gridObject)
@@ -189,14 +193,15 @@ public class Map
     private List<MapGridObject> GetNeighbourList(int x, int y)
     {
         List<MapGridObject> neighbourList = new List<MapGridObject>();
-        if(x - 1 >= 0)
+
+        if (x - 1 >= 0)
         {
             //Left
             neighbourList.Add(grid.GetGridObject(x - 1, y));
             //Left Down
-            if(y - 1 >= 0) neighbourList.Add(grid.GetGridObject(x - 1, y - 1));
+            if (y - 1 >= 0) neighbourList.Add(grid.GetGridObject(x - 1, y - 1));
             //Left Up
-            if(y + 1 < grid.GetHeight()) neighbourList.Add(grid.GetGridObject(x - 1, y + 1));
+            if (y + 1 < grid.GetHeight()) neighbourList.Add(grid.GetGridObject(x - 1, y + 1));
         }
         if (x + 1 < grid.GetWidth())
         {
@@ -208,7 +213,7 @@ public class Map
             if (y + 1 < grid.GetHeight()) neighbourList.Add(grid.GetGridObject(x + 1, y + 1));
         }
         //Up
-        if(y - 1 >= 0) neighbourList.Add(grid.GetGridObject(x, y - 1));
+        if (y - 1 >= 0) neighbourList.Add(grid.GetGridObject(x, y - 1));
         //Down
         if (y + 1 < grid.GetHeight()) neighbourList.Add(grid.GetGridObject(x, y + 1));
 
@@ -220,5 +225,5 @@ public class Map
         return grid;
     }
 
-   
+
 }

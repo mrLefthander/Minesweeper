@@ -18,6 +18,7 @@ public class MapGridObject
         MineNum_7,
         MineNum_8,
     }
+
     private Grid<MapGridObject> grid;
     private int x;
     private int y;
@@ -60,11 +61,8 @@ public class MapGridObject
 
     public void Reveal()
     {
-        if (!isRevealed)
-        {
-            isRevealed = true;
-            grid.TriggerGridObjectChanged(x, y);
-        }
+        isRevealed = true;
+        grid.TriggerGridObjectChanged(x, y);
     }
 
     public override string ToString()
