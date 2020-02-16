@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameValuesController : MonoBehaviour
 {
@@ -22,12 +23,21 @@ public class GameValuesController : MonoBehaviour
 
     public GameValuesController.Difficulty difficulty;
     public GameValuesController.MapSize mapSize;
+    public float volume;
+
+    private const string AUDIOMIXER_EXPOSED_VAR_NAME = "volume";
+    [SerializeField] private AudioMixer mainMixer;
 
     private void Awake()
     {
         SetUpSingleton();
         difficulty = SettingsPlayerPrefsManager.GetSavedDifficulty();
         mapSize = SettingsPlayerPrefsManager.GetSavedMapSize();
+        volume = SettingsPlayerPrefsManager.GetSavedVolume();
+    }
+    private void Start()
+    {
+        SetVolume(volume);
     }
 
     private void SetUpSingleton()
@@ -44,14 +54,8 @@ public class GameValuesController : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-
-    public void GetGameValues(out Vector2Int mapDimesions, out int minesToPlace)
-    {
-        mapDimesions = GetMapDimensions();
-        minesToPlace = GetMinesToPlaceCount(mapDimesions);
-    }
     
-    private int GetMinesToPlaceCount(Vector2Int mapDimensions)
+    public int GetMinesToPlaceCount(Vector2Int mapDimensions)
     {
         int basicMinesCount = Mathf.RoundToInt(mapDimensions.x * mapDimensions.y / 10);
 
@@ -67,7 +71,7 @@ public class GameValuesController : MonoBehaviour
         }
     }
 
-    private Vector2Int GetMapDimensions()
+    public Vector2Int GetMapDimensions()
     {
         switch (mapSize)
         {
@@ -79,5 +83,10 @@ public class GameValuesController : MonoBehaviour
             case GameValuesController.MapSize.Large:
                 return new Vector2Int(15, 15);
         }
+    }
+
+    public void SetVolume(float sliderValue)
+    {
+        mainMixer.SetFloat(AUDIOMIXER_EXPOSED_VAR_NAME, Mathf.Log10(sliderValue) * 20);
     }
 }

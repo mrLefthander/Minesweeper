@@ -1,36 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
+using TMPro;
+using System;
 
 public class VolumeController : MonoBehaviour
 {
-    private const string AUDIOMIXER_EXPOSED_VAR_NAME = "volume";
-
-    [SerializeField] private AudioMixer mainMixer;
-
     private Slider volumeSlider;
+    private TMP_Text volumeText;
 
     private void Start()
     {
         volumeSlider = GetComponentInChildren<Slider>();
+        volumeText = volumeSlider.GetComponentInChildren<TMP_Text>();
+
+        volumeSlider.onValueChanged.AddListener(OnSliderValueChange);
+
         SetSliderValue();
-        SetVolume(volumeSlider.value);
+        SetVolumeTextValue();
+    }
+
+    private void SetVolumeTextValue()
+    {
+        float scaledVolumeValue = volumeSlider.value * 100;
+        volumeText.text = ((int)scaledVolumeValue).ToString();
     }
 
     private void SetSliderValue()
     {
-        volumeSlider.value = SettingsPlayerPrefsManager.GetSavedVolume();
+        volumeSlider.value = GameValuesController.instance.volume;
+    }
+
+    public void OnSliderValueChange(float volume)
+    {
+        GameValuesController.instance.SetVolume(volume);
+        SetVolumeTextValue();
     }
 
     public void SaveCurrentVolume()
     {
+        GameValuesController.instance.volume = volumeSlider.value;
         SettingsPlayerPrefsManager.SaveVolume(volumeSlider.value);
     }
 
-    public void SetVolume(float sliderValue)
-    {
-        mainMixer.SetFloat(AUDIOMIXER_EXPOSED_VAR_NAME, Mathf.Log10(sliderValue) * 20);
-    }
 }

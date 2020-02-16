@@ -17,7 +17,9 @@ public class MinesweeperGameHandler : MonoBehaviour
     {
         uiHandler = FindObjectOfType<UIHandler>();
 
-        GameValuesController.instance.GetGameValues(out Vector2Int mapDimensions, out int minesToPlace);
+        Vector2Int mapDimensions = GameValuesController.instance.GetMapDimensions();
+        int minesToPlace = GameValuesController.instance.GetMinesToPlaceCount(mapDimensions);
+
         map = new Map(mapDimensions, minesToPlace);
         gridPrefabVisual.Setup(map.GetGrid());
         isGameActive = true;

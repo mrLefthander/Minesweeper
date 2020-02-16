@@ -34,6 +34,20 @@ public class AudioManager : MonoBehaviour
         return Array.Find(sounds, s => s.soundName == soundName);
     }
 
+
+    public void PlayRevealSound(MapGridObject.Type gridObjectType)
+    {
+        switch (gridObjectType)
+        {
+            default:
+                PlaySound(Sound.Type.RevealCell);
+                break;
+            case MapGridObject.Type.Mine:
+                PlaySound(Sound.Type.RevealMineCell);
+                break;
+        }
+    }
+
     private void SetUpSingleton()
     {
         if (instance == null)
@@ -47,19 +61,6 @@ public class AudioManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
-    }
-
-    public void PlayRevealSound(MapGridObject.Type gridObjectType)
-    {
-        switch (gridObjectType)
-        {
-            default:
-                PlaySound(Sound.Type.RevealCell);
-                break;
-            case MapGridObject.Type.Mine:
-                PlaySound(Sound.Type.RevealMineCell);
-                break;
-        }
     }
 
 }

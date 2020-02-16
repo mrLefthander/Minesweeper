@@ -43,3 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640740c9af35d0040a10a3cb1f5f2c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficulty: 0
+  mapSize: 0
+  volume: 0
+  mainMixer: {fileID: 24100000, guid: fc796d8b371fb3b4c8ce40fa2747b5b3, type: 2}
