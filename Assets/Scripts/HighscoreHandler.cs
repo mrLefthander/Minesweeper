@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,10 @@ public class HighscoreHandler : MonoBehaviour
     public bool IsHighscore(int score)
     {
         Highscores highscores = GetHighscores();
-        int numOfHighscores = highscores.highscoreEntryList.Count;
-        if (numOfHighscores <= 10 || score < highscores.highscoreEntryList[numOfHighscores - 1].score)
+        if(highscores.highscoreEntryList.Count <= 10 || score < highscores.highscoreEntryList.Last().score)
         {
             return true;
-        }
+        }        
         return false;
     }
 
@@ -51,7 +51,12 @@ public class HighscoreHandler : MonoBehaviour
     private Highscores GetHighscores()
     {
         string jsonString = PlayerPrefs.GetString(HIGHSCORE_PLAYERPREFS_KEY);
-        return JsonUtility.FromJson<Highscores>(jsonString);
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+        if(highscores == null)
+        {
+            return new Highscores { highscoreEntryList = new List<HighscoreEntry>() };
+        }
+        return highscores;
     }
 
     public List<HighscoreEntry> GetHighscoresList()
