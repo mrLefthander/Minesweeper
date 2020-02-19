@@ -43,4 +43,9 @@ public class SettingsPlayerPrefsManager
     {
         PlayerPrefs.SetFloat(VOLUME_PLAYERPREFS_KEY, Mathf.Clamp(volume, MIN_VOLUME, MAX_VOLUME));
     }
+
+    public static void SaveResolutionSettings(int resolutionIndex)
+    {
+
+    }
 }

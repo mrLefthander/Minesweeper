@@ -277,7 +277,18 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 880292936}
+        m_MethodName: SetFullscreen
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &60448597
 GameObject:
@@ -2846,6 +2857,7 @@ GameObject:
   m_Component:
   - component: {fileID: 880292935}
   - component: {fileID: 880292938}
+  - component: {fileID: 880292936}
   m_Layer: 5
   m_Name: ResolutionSelector
   m_TagString: Untagged
@@ -2875,6 +2887,18 @@ RectTransform:
   m_AnchoredPosition: {x: -540, y: -120}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &880292936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880292934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 502fab0a6bc86cf43873d6fe6c302c19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &880292938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3935,7 +3959,18 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 880292936}
+        m_MethodName: SetResolution
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1238399560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5349,7 +5384,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 758559229}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.67500013
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
