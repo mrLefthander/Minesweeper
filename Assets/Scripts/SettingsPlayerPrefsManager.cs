@@ -8,6 +8,8 @@ public class SettingsPlayerPrefsManager
     const string DIFFICULTY_PLAYERPREFS_KEY = "difficulty";
     const string MAP_SIZE_PLAYERPREFS_KEY = "map size";
     const string VOLUME_PLAYERPREFS_KEY = "volume";
+    const string FULLSCREEN_PLAYERPREFS_KEY = "fullscreen";
+    const string RESOLUTION_INDEX_PLAYERPREFS_KEY = "resolution index";
 
     const float MIN_VOLUME = 0.0001f;
     const float MAX_VOLUME = 1f;
@@ -44,8 +46,15 @@ public class SettingsPlayerPrefsManager
         PlayerPrefs.SetFloat(VOLUME_PLAYERPREFS_KEY, Mathf.Clamp(volume, MIN_VOLUME, MAX_VOLUME));
     }
 
-    public static void SaveResolutionSettings(int resolutionIndex)
+    public static void SaveResolutionSettings(int resolutionIndex, int fullscreenIndicator)
     {
+        PlayerPrefs.SetInt(FULLSCREEN_PLAYERPREFS_KEY, fullscreenIndicator);
+        PlayerPrefs.SetInt(RESOLUTION_INDEX_PLAYERPREFS_KEY, resolutionIndex);
+    }
 
+    public static void GetSavedResolutionSettings(out int resolutionIndex, out int fullscreenIndicator)
+    {
+        fullscreenIndicator = PlayerPrefs.GetInt(FULLSCREEN_PLAYERPREFS_KEY);
+        resolutionIndex = PlayerPrefs.GetInt(RESOLUTION_INDEX_PLAYERPREFS_KEY);
     }
 }

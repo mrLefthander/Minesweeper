@@ -59,14 +59,14 @@ public class MinesweeperGameHandler : MonoBehaviour
                     map.ChangeFlaggedStateOnGridPosition(position);
                 }
 
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    gridPrefabVisual.SetRevealMap(true);
-                }
-                if (Input.GetKeyUp(KeyCode.D))
-                {
-                    gridPrefabVisual.SetRevealMap(false);
-                }
+                //if (Input.GetKeyDown(KeyCode.D))
+                //{
+                //    gridPrefabVisual.SetRevealMap(true);
+                //}
+                //if (Input.GetKeyUp(KeyCode.D))
+                //{
+                //    gridPrefabVisual.SetRevealMap(false);
+                //}
 
                 HandleTimer();
             }

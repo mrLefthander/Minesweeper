@@ -2,16 +2,28 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class RecolutionSelector : MonoBehaviour
 {
     List<Resolution> resolutionsList;
     TMP_Dropdown resolutionDropdown;
+    Toggle fullscreenToggle;
+
 
     void Start()
     {
+        fullscreenToggle = GetComponentInChildren<Toggle>();
         InitializeResolutionDropdown();
+        SetUpInitialValues();
+    }
+
+    private void SetUpInitialValues()
+    {
+        SettingsPlayerPrefsManager.GetSavedResolutionSettings(out int resolutionIndex, out int fullscreenIndicator);
+        resolutionDropdown.value = resolutionIndex;
+        fullscreenToggle.isOn = (fullscreenIndicator < 1) ? false : true;
     }
 
     private void InitializeResolutionDropdown()
@@ -24,18 +36,9 @@ public class RecolutionSelector : MonoBehaviour
         resolutionDropdown.ClearOptions();
 
         List<string> resolutionStrings = resolutionsList.Select(r => r.width + " x " + r.height).ToList();
-        //int currentResolutionIndex = 0;
-        //for (int i = 0; i < resolutionsList.Count; i++)
-        //{
-        //    resolutionStrings.Add(resolutionsList[i].width + " x " + resolutionsList[i].height);
-        //    if (resolutionsList[i].width == Screen.currentResolution.width && resolutionsList[i].height == Screen.currentResolution.height)
-        //    {
-        //        currentResolutionIndex = i;
-        //    }
-        //}
 
         resolutionDropdown.AddOptions(resolutionStrings);
-        resolutionDropdown.value = resolutionsList.IndexOf(Screen.currentResolution);
+        
     }
 
     public void SetResolution(int resolutionIndex)
@@ -51,7 +54,7 @@ public class RecolutionSelector : MonoBehaviour
 
     public void SaveCurrentResolutionSettings()
     {
-       // GameValuesController.instance.difficulty = (GameValuesController.Difficulty);
-        SettingsPlayerPrefsManager.SaveResolutionSettings(resolutionDropdown.value);
+        int fullscreenIndicator = Screen.fullScreen ? 1 : 0;
+        SettingsPlayerPrefsManager.SaveResolutionSettings(resolutionDropdown.value, fullscreenIndicator);
     }
 }

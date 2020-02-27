@@ -73,7 +73,7 @@ public class Map
     public MapGridObject.Type RevealGridPosition(Vector3 position)
     {
         MapGridObject mapGridObject = grid.GetGridObject(position);
-        if (mapGridObject != null && !mapGridObject.IsRevealed())
+        if (mapGridObject != null && !mapGridObject.IsRevealed() && !mapGridObject.IsFlagged())
         {
             return RevealGridPosition(mapGridObject);
         }
