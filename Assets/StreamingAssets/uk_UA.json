@@ -1,1 +1,16 @@
-{"localizationItems":[{"key":"settings_title","value":"Настройки"}]}
+{"localizationItems":[
+	{"key":"settings_title","value":"Налаштування"},
+	{"key":"settings_back_button","value":"Назад"},
+	{"key":"settings_difficulty","value":"Скалдність"},
+	{"key":"easy_difficulty","value":"Низька"},
+	{"key":"medium_difficulty","value":"Середня"},
+	{"key":"hard_difficulty","value":"Висока"},
+	{"key":"settings_map_size","value":"Размір поля"},
+	{"key":"small_map_size","value":"Мале"},
+	{"key":"medium_map_size","value":"Середнє"},
+	{"key":"large_map_size","value":"Велике"},
+	{"key":"settings_volume","value":"Гучність"},
+	{"key":"settings_language","value":"Мова"},
+	{"key":"settings_resolution","value":"Розширення"},
+	{"key":"settings_fullscreen","value":"Повноекранний режим"}
+]}

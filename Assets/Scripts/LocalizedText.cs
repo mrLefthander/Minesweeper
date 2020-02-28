@@ -6,16 +6,18 @@ using TMPro;
 public class LocalizedText : MonoBehaviour
 {
     public string key;
-    TextMeshPro text;
-
+    TMP_Text titleText;
     void Start()
     {
-        text = GetComponent<TextMeshPro>();
-        text.text = LocalizationManager.instance.GetLocalizedValue(key);
+        titleText = GetComponent<TMP_Text>();
+        titleText.text = LocalizationManager.instance.GetLocalizedValue(key);
     }
 
     private void Update()
     {
-        text.text = LocalizationManager.instance.GetLocalizedValue(key);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            titleText.text = LocalizationManager.instance.GetLocalizedValue(key);
+        }
     }
 }

@@ -1,1 +1,16 @@
-{"localizationItems":[{"key":"settings_title","value":"Настройки"}]}
+{"localizationItems":[
+	{"key":"settings_title","value":"Settings"},
+	{"key":"settings_back_button","value":"Back"},
+	{"key":"settings_difficulty","value":"Difficulty"},
+	{"key":"easy_difficulty","value":"Easy"},
+	{"key":"medium_difficulty","value":"Medium"},
+	{"key":"hard_difficulty","value":"Hard"},
+	{"key":"settings_map_size","value":"Field size"},
+	{"key":"small_map_size","value":"Small"},
+	{"key":"medium_map_size","value":"Medium"},
+	{"key":"large_map_size","value":"Large"},
+	{"key":"settings_volume","value":"Volume"},
+	{"key":"settings_language","value":"Language"},
+	{"key":"settings_resolution","value":"Resolution"},
+	{"key":"settings_fullscreen","value":"Fullscreen mode"}
+]}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class LocalizationManager : MonoBehaviour
 {
@@ -13,12 +14,14 @@ public class LocalizationManager : MonoBehaviour
     }
 
     public static LocalizationManager instance;
+    public Language currentLanguage;
 
     private Dictionary<string, string> localizedText;
 
     private void Awake()
     {
         SetUpSingleton();
+        LoadLocalizedText(SettingsPlayerPrefsManager.GetSavedLanguage());
     }
 
     public void LoadLocalizedText(Language language)
@@ -35,7 +38,6 @@ public class LocalizationManager : MonoBehaviour
             {
                 localizedText.Add(loadedData.localizationItems[i].key, loadedData.localizationItems[i].value);
             }
-            Debug.Log("Loaded " + localizedText.Count);
         }
         else
         {
@@ -45,11 +47,11 @@ public class LocalizationManager : MonoBehaviour
 
     public string GetLocalizedValue(string key)
     {
-        if (localizedText.ContainsKey(key))
+        if (!localizedText.ContainsKey(key))
         {
-            return localizedText[key];
+            return "missing localized text for: " + key;
         }
-        return "missing localized text for: " + key;
+        return localizedText[key];
     }
 
     private string GetFileName(Language language)

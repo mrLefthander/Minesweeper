@@ -8,9 +8,11 @@ public class LocalizationSelectorToggle : MonoBehaviour, ISelectHandler
 {
     [SerializeField]
     private LocalizationManager.Language language;
+
     public void OnSelect(BaseEventData eventData)
     {
         GetComponent<Toggle>().isOn = true;
         LocalizationManager.instance.LoadLocalizedText(language);
+        FindObjectOfType<SceneLoader>().LoadSettingsMenu();
     }
 }
