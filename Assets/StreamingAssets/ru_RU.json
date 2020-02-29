@@ -1,5 +1,5 @@
 {"localizationItems":[
-	{"key":"settings_title","value":"Настройки"},
+	{"key":"settings_title","value":"Опции"},
 	{"key":"settings_back_button","value":"Назад"},
 	{"key":"settings_difficulty","value":"Сложность"},
 	{"key":"easy_difficulty","value":"Низка"},
@@ -12,5 +12,24 @@
 	{"key":"settings_volume","value":"Громкость"},
 	{"key":"settings_language","value":"Язык"},
 	{"key":"settings_resolution","value":"Разрешение"},
-	{"key":"settings_fullscreen","value":"Полноэкранный режим"}
+	{"key":"settings_fullscreen","value":"Полноэкранный режим"},
+	{"key":"main_menu_start","value":"Начать"},
+	{"key":"highscores_title","value":"Рекорды"},
+	{"key":"main_menu_quit","value":"Выйти"},
+	{"key":"highscores_label_name","value":"Имя"},
+	{"key":"highscores_label_score","value":"Очки"},
+	{"key":"highscores_label_rank","value":"Ранг"},
+	{"key":"highscores_reset_button","value":"Очистить"},
+	{"key":"new_highscore_title","value":"У тебя новый рекорд!"},
+	{"key":"new_highscore_enter_name","value":"Твое имя:"},
+	{"key":"cancel_button","value":"Отмена"},
+	{"key":"ok_button","value":"ОК"},
+	{"key":"you_lost_title","value":"Ты проиграл"},
+	{"key":"retry_button","value":"Снова"},
+	{"key":"menu_button","value":"Меню"},
+	{"key":"you_win_title","value":"Ты выиграл!"},
+	{"key":"play_again_button","value":"Еще"},
+	{"key":"pause_title","value":"Пауза"},
+	{"key":"restart_button","value":"Заново"},
+	{"key":"resume_button","value":"Продолжить"}
 ]}

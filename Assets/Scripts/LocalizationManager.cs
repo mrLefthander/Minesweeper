@@ -21,7 +21,8 @@ public class LocalizationManager : MonoBehaviour
     private void Awake()
     {
         SetUpSingleton();
-        LoadLocalizedText(SettingsPlayerPrefsManager.GetSavedLanguage());
+        currentLanguage = SettingsPlayerPrefsManager.GetSavedLanguage();
+        LoadLocalizedText(currentLanguage);
     }
 
     public void LoadLocalizedText(Language language)

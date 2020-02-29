@@ -80,6 +80,10 @@ public class SettingsPlayerPrefsManager
                     return LocalizationManager.Language.Ukrainian;
             }
         }
-        
+    }
+
+    public static void SaveLanguage(LocalizationManager.Language language)
+    {
+        PlayerPrefs.SetString(LANGUAGE_PLAYERPREFS_KEY, language.ToString());
     }
 }

@@ -12,12 +12,4 @@ public class LocalizedText : MonoBehaviour
         titleText = GetComponent<TMP_Text>();
         titleText.text = LocalizationManager.instance.GetLocalizedValue(key);
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            titleText.text = LocalizationManager.instance.GetLocalizedValue(key);
-        }
-    }
 }

@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 103894524}
   - component: {fileID: 103894526}
   - component: {fileID: 103894525}
+  - component: {fileID: 103894527}
   m_Layer: 5
   m_Name: startButtonText
   m_TagString: Untagged
@@ -155,8 +156,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.4400024, y: 0}
+  m_SizeDelta: {x: -25.78, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &103894525
 MonoBehaviour:
@@ -178,8 +179,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Start
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34f27556840300743975b5c198fabeef, type: 2}
+  m_sharedMaterial: {fileID: 741245879610923708, guid: 34f27556840300743975b5c198fabeef,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -204,12 +206,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -276,6 +278,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 103894523}
   m_CullTransparentMesh: 0
+--- !u!114 &103894527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103894523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f657237edbbbc7a488df372e12369186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: main_menu_start
 --- !u!1 &417251805
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +302,7 @@ GameObject:
   - component: {fileID: 417251806}
   - component: {fileID: 417251808}
   - component: {fileID: 417251807}
+  - component: {fileID: 417251809}
   m_Layer: 5
   m_Name: settingsButtonText
   m_TagString: Untagged
@@ -310,8 +326,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.4400024, y: 0}
+  m_SizeDelta: {x: -25.78, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &417251807
 MonoBehaviour:
@@ -333,8 +349,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Settings
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34f27556840300743975b5c198fabeef, type: 2}
+  m_sharedMaterial: {fileID: 741245879610923708, guid: 34f27556840300743975b5c198fabeef,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -359,12 +376,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -431,6 +448,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 417251805}
   m_CullTransparentMesh: 0
+--- !u!114 &417251809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417251805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f657237edbbbc7a488df372e12369186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: settings_title
 --- !u!1 &516231359
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,8 +518,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: BombSweeper
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34f27556840300743975b5c198fabeef, type: 2}
+  m_sharedMaterial: {fileID: 741245879610923708, guid: 34f27556840300743975b5c198fabeef,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1261,6 +1292,7 @@ GameObject:
   - component: {fileID: 1609414694}
   - component: {fileID: 1609414696}
   - component: {fileID: 1609414695}
+  - component: {fileID: 1609414697}
   m_Layer: 5
   m_Name: highscoresButtonText
   m_TagString: Untagged
@@ -1284,8 +1316,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.4400024, y: 0}
+  m_SizeDelta: {x: -25.78, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1609414695
 MonoBehaviour:
@@ -1307,8 +1339,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Highscores
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34f27556840300743975b5c198fabeef, type: 2}
+  m_sharedMaterial: {fileID: 741245879610923708, guid: 34f27556840300743975b5c198fabeef,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1333,12 +1366,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -1405,6 +1438,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609414693}
   m_CullTransparentMesh: 0
+--- !u!114 &1609414697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609414693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f657237edbbbc7a488df372e12369186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: highscores_title
 --- !u!1 &1659473380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1462,7 @@ GameObject:
   - component: {fileID: 1659473381}
   - component: {fileID: 1659473383}
   - component: {fileID: 1659473382}
+  - component: {fileID: 1659473384}
   m_Layer: 5
   m_Name: quitButtonText
   m_TagString: Untagged
@@ -1439,8 +1486,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.5, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.4400024, y: 0}
+  m_SizeDelta: {x: -25.78, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1659473382
 MonoBehaviour:
@@ -1462,8 +1509,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Quit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 34f27556840300743975b5c198fabeef, type: 2}
+  m_sharedMaterial: {fileID: 741245879610923708, guid: 34f27556840300743975b5c198fabeef,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1488,12 +1536,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -1560,6 +1608,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659473380}
   m_CullTransparentMesh: 0
+--- !u!114 &1659473384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659473380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f657237edbbbc7a488df372e12369186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: main_menu_quit
 --- !u!1 &1811948457
 GameObject:
   m_ObjectHideFlags: 0
