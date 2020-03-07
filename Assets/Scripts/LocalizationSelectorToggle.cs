@@ -11,7 +11,7 @@ public class LocalizationSelectorToggle : MonoBehaviour, ISelectHandler
 
     void Start()
     {
-        if(language == LocalizationManager.instance.currentLanguage)
+        if(language == LocalizationManager.instance.CurrentLanguage)
         {
             GetComponent<Toggle>().isOn = true;
         }
@@ -20,8 +20,8 @@ public class LocalizationSelectorToggle : MonoBehaviour, ISelectHandler
     public void OnSelect(BaseEventData eventData)
     {
         GetComponent<Toggle>().isOn = true;
-        LocalizationManager.instance.currentLanguage = language;
-        LocalizationManager.instance.LoadLocalizedText(language);
-        FindObjectOfType<SceneLoader>().LoadSettingsMenu();
+        LocalizationManager.instance.CurrentLanguage = language;
+        AudioManager.instance.PlaySound(Sound.Type.ToggleClick);
+        SettingsPlayerPrefsManager.SaveLanguage(language);
     }
 }

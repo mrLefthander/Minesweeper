@@ -6,6 +6,7 @@ using System;
 
 public class LocalizationManager : MonoBehaviour
 {
+    public event Action OnLanguageChange;
     public enum Language
     {
         English,
@@ -14,21 +15,34 @@ public class LocalizationManager : MonoBehaviour
     }
 
     public static LocalizationManager instance;
-    public Language currentLanguage;
-
     private Dictionary<string, string> localizedText;
+    [SerializeField]
+    private Language currentLanguage;
+    public Language CurrentLanguage
+    {
+        get { return currentLanguage; }
+        set
+        {
+            if (currentLanguage == value) return;
+
+            currentLanguage = value;
+
+            OnLanguageChange?.Invoke();
+        }
+    }
 
     private void Awake()
     {
         SetUpSingleton();
-        currentLanguage = SettingsPlayerPrefsManager.GetSavedLanguage();
-        LoadLocalizedText(currentLanguage);
+        CurrentLanguage = SettingsPlayerPrefsManager.GetSavedLanguage();
+        LoadLocalizedText();
+        OnLanguageChange += LoadLocalizedText;
     }
 
-    public void LoadLocalizedText(Language language)
+    public void LoadLocalizedText()
     {
         localizedText = new Dictionary<string, string>();
-        string fileName = GetFileName(language);
+        string fileName = GetFileName(currentLanguage);
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
         if(File.Exists(filePath))
         {

@@ -11,12 +11,16 @@ public class RecolutionSelector : MonoBehaviour
     TMP_Dropdown resolutionDropdown;
     Toggle fullscreenToggle;
 
+    bool isPlayingSound = false;
+
 
     void Start()
     {
         fullscreenToggle = GetComponentInChildren<Toggle>();
         InitializeResolutionDropdown();
         SetUpInitialValues();
+        isPlayingSound = true;
+
     }
 
     private void SetUpInitialValues()
@@ -45,16 +49,29 @@ public class RecolutionSelector : MonoBehaviour
     {
         Resolution resolution = resolutionsList[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        if (isPlayingSound)
+        {
+            PlayClickSound();
+        }
     }
 
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
+        if (isPlayingSound)
+        {
+            PlayClickSound();
+        }
     }
 
     public void SaveCurrentResolutionSettings()
     {
         int fullscreenIndicator = Screen.fullScreen ? 1 : 0;
         SettingsPlayerPrefsManager.SaveResolutionSettings(resolutionDropdown.value, fullscreenIndicator);
+    }
+
+    public void PlayClickSound()
+    {
+        AudioManager.instance.PlaySound(Sound.Type.ToggleClick);
     }
 }

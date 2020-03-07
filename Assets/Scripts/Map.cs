@@ -225,5 +225,13 @@ public class Map
         return grid;
     }
 
+    public int GetFlaggedCellsCount()
+    {
+        return flaggedCellsCount;
+    }
 
+    public int GetMinesCount()
+    {
+        return minesCount;
+    }
 }

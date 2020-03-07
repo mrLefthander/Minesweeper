@@ -33,6 +33,7 @@ public class MapGridObject
         this.y = y;
         type = Type.Empty;
         isRevealed = false;
+        isFlagged = false;
     }
 
     public void SetGridObjectType(Type type)

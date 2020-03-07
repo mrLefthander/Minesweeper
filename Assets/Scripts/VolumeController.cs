@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
-using System;
 
 public class VolumeController : MonoBehaviour
 {
@@ -42,6 +40,11 @@ public class VolumeController : MonoBehaviour
     {
         GameValuesController.instance.volume = volumeSlider.value;
         SettingsPlayerPrefsManager.SaveVolume(volumeSlider.value);
+    }
+
+    public void PlayPointerUpSound()
+    {
+        AudioManager.instance.PlaySound(Sound.Type.ToggleClick);
     }
 
 }

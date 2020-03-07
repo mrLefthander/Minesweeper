@@ -1,24 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIHandler : MonoBehaviour
 {
-    private GameObject gameOverWindow;
-    private GameObject gameWinWindow;
-    private GameObject blocker;
-    private GameObject pauseWindow;
-    private InputWindow inputWindow;
-    private HighscoreHandler highscoreHandler;
+    [SerializeField] private GameObject gameOverWindow;
+    [SerializeField] private GameObject gameWinWindow;
+    [SerializeField] private GameObject blocker;
+    [SerializeField] private GameObject pauseWindow;
+    [SerializeField] private InputWindow inputWindow;
+    [SerializeField] private HighscoreHandler highscoreHandler;
 
     private void Awake()
     {
-        gameOverWindow = transform.Find("Canvas/GameOverWindow").gameObject;
-        gameWinWindow = transform.Find("Canvas/GameWinWindow").gameObject;
-        blocker = transform.Find("Canvas/Blocker").gameObject;
-        pauseWindow = transform.Find("Canvas/PauseWindow").gameObject;
-        inputWindow = GetComponentInChildren<InputWindow>(true);
-        highscoreHandler = FindObjectOfType<HighscoreHandler>();
+        //gameOverWindow = transform.Find("Canvas/GameOverWindow").gameObject;
+        //gameWinWindow = transform.Find("Canvas/GameWinWindow").gameObject;
+        //blocker = transform.Find("Canvas/Blocker").gameObject;
+        //pauseWindow = transform.Find("Canvas/PauseWindow").gameObject;
+        //inputWindow = GetComponentInChildren<InputWindow>(true);
+        //highscoreHandler = FindObjectOfType<HighscoreHandler>();
 
         HideAll();
     }

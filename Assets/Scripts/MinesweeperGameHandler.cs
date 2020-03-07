@@ -6,16 +6,18 @@ using UnityEngine;
 public class MinesweeperGameHandler : MonoBehaviour
 {
     [SerializeField] private GridPrefabVisual gridPrefabVisual;
-    [SerializeField] private TMPro.TextMeshPro timerText;
     private Map map;
-    private float timer;
     private bool isGameActive;
     private bool isPaused;
     private UIHandler uiHandler;
+    private TimerHandler timer;
+    private FlagCountHandler flagCountHandler;
 
     void Start()
     {
+        timer = FindObjectOfType<TimerHandler>();
         uiHandler = FindObjectOfType<UIHandler>();
+        flagCountHandler = FindObjectOfType<FlagCountHandler>();
 
         Vector2Int mapDimensions = GameValuesController.instance.GetMapDimensions();
         int minesToPlace = GameValuesController.instance.GetMinesToPlaceCount(mapDimensions);
@@ -25,23 +27,27 @@ public class MinesweeperGameHandler : MonoBehaviour
         isGameActive = true;
         isPaused = false;
 
+        flagCountHandler.Setup(map);
+
         map.OnEntireMapRevealed += Map_OnEntireMapRevealed;
     }
 
     private void Map_OnEntireMapRevealed(object sender, EventArgs e)
     {
         isGameActive = false;
-        int timeScore = Mathf.FloorToInt(timer);
 
-        StartCoroutine(uiHandler.WinCoroutine(timeScore));
+        StartCoroutine(uiHandler.WinCoroutine(timer.GetScore()));
     }
 
     void Update()
     {
+        
         if (isGameActive)
         {
             if (!isPaused)
             {
+                timer.HandleTimer();
+
                 if (Input.GetMouseButtonDown(0))
                 {
                     Vector3 position = GetMouseWorldPosition();
@@ -57,18 +63,19 @@ public class MinesweeperGameHandler : MonoBehaviour
                 {
                     Vector3 position = GetMouseWorldPosition();
                     map.ChangeFlaggedStateOnGridPosition(position);
+
+                    flagCountHandler.UpdateFlagCount();
                 }
 
-                //if (Input.GetKeyDown(KeyCode.D))
-                //{
-                //    gridPrefabVisual.SetRevealMap(true);
-                //}
-                //if (Input.GetKeyUp(KeyCode.D))
-                //{
-                //    gridPrefabVisual.SetRevealMap(false);
-                //}
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    gridPrefabVisual.SetRevealMap(true);
+                }
+                if (Input.GetKeyUp(KeyCode.D))
+                {
+                    gridPrefabVisual.SetRevealMap(false);
+                }
 
-                HandleTimer();
             }
 
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Pause))
@@ -93,12 +100,5 @@ public class MinesweeperGameHandler : MonoBehaviour
         return worldPosition;
     }
 
-    private void HandleTimer()
-    {
-        if (isGameActive)
-        {
-            timer += Time.deltaTime;
-            timerText.text = Mathf.FloorToInt(timer).ToString();
-        }
-    }
+    
 }
