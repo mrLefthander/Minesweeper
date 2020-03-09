@@ -20,7 +20,7 @@
 	{"key":"highscores_label_score","value":"Рахунок"},
 	{"key":"highscores_label_rank","value":"Ранг"},
 	{"key":"highscores_reset_button","value":"Скинути"},
-	{"key":"new_highscore_title","value":"У тебе новый рекорд!"},
+	{"key":"new_highscore_title","value":"В тебе новый рекорд!"},
 	{"key":"new_highscore_enter_name","value":"Твоє ім'я:"},
 	{"key":"cancel_button","value":"Скасувати"},
 	{"key":"ok_button","value":"ОК"},

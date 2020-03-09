@@ -67,14 +67,14 @@ public class MinesweeperGameHandler : MonoBehaviour
                     flagCountHandler.UpdateFlagCount();
                 }
 
-                if (Input.GetKeyDown(KeyCode.D))
+               /* if (Input.GetKeyDown(KeyCode.D))
                 {
                     gridPrefabVisual.SetRevealMap(true);
                 }
                 if (Input.GetKeyUp(KeyCode.D))
                 {
                     gridPrefabVisual.SetRevealMap(false);
-                }
+                }*/
 
             }
 

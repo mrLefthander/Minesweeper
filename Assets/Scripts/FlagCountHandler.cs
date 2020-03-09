@@ -22,8 +22,12 @@ public class FlagCountHandler : MonoBehaviour
         UpdateFlagCountVisual(currentFlagCount);
     }
 
-    public void UpdateFlagCountVisual(int amount)
+    private void UpdateFlagCountVisual(int amount)
     {
         timerVisual.text = amount.ToString();
+        if(amount < 0)
+        {
+            timerVisual.color = Color.red;
+        }
     }
 }
