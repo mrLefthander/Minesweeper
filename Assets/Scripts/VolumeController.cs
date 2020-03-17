@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
+using System.Diagnostics;
+using System;
 
 public class VolumeController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class VolumeController : MonoBehaviour
         volumeText = volumeSlider.GetComponentInChildren<TMP_Text>();
 
         volumeSlider.onValueChanged.AddListener(OnSliderValueChange);
+
+        HideVolumeTextOnAndroid();
 
         SetSliderValue();
         SetVolumeTextValue();
@@ -45,6 +48,12 @@ public class VolumeController : MonoBehaviour
     public void PlayPointerUpSound()
     {
         AudioManager.instance.PlaySound(Sound.Type.ToggleClick);
+    }
+
+    [Conditional("UNITY_ANDROID")]
+    private void HideVolumeTextOnAndroid()
+    {
+        volumeText.gameObject.SetActive(false);
     }
 
 }

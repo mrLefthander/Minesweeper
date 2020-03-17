@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Diagnostics;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -73,6 +73,7 @@ public class GameValuesController : MonoBehaviour
 
     public Vector2Int GetMapDimensions()
     {
+#if UNITY_STANDALONE || UNITY_WEBGL
         switch (mapSize)
         {
             default:
@@ -83,6 +84,20 @@ public class GameValuesController : MonoBehaviour
             case GameValuesController.MapSize.Large:
                 return new Vector2Int(15, 15);
         }
+#endif
+
+#if UNITY_ANDROID
+        switch (mapSize)
+        {
+            default:
+            case GameValuesController.MapSize.Small:
+                return new Vector2Int(6, 9);
+            case GameValuesController.MapSize.Medium:
+                return new Vector2Int(7, 11);
+            case GameValuesController.MapSize.Large:
+                return new Vector2Int(8, 13);
+        }
+#endif
     }
 
     public void SetVolume(float sliderValue)

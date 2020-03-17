@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
-public class LocalizedText : MonoBehaviour
+public class LocalizedText: MonoBehaviour
 {
     public string key;
     TMP_Text titleText;
@@ -13,7 +13,7 @@ public class LocalizedText : MonoBehaviour
     {
         titleText = GetComponent<TMP_Text>();
         LocalizeText();
-        LocalizationManager.instance.OnLanguageChange += UpdateText;
+        LocalizationManager.instance.OnDataLoaded += UpdateText;
     }
 
     private void Update()
@@ -22,6 +22,7 @@ public class LocalizedText : MonoBehaviour
         {
             LocalizeText();
             updateText = false;
+
         }
     }
 
@@ -33,5 +34,10 @@ public class LocalizedText : MonoBehaviour
     private void LocalizeText()
     {
         titleText.text = LocalizationManager.instance.GetLocalizedValue(key);
+    }
+
+    private void OnDestroy()
+    {
+        LocalizationManager.instance.OnDataLoaded -= UpdateText;
     }
 }

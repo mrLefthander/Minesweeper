@@ -169,12 +169,12 @@ public class Map
         float delayStep = totalDelay / (grid.GetWidth() + 5f);
         float delay = delayStep * 4f;
 
-        for (int y = 0; y < grid.GetWidth(); y++)
+        for (int y = 0; y < grid.GetHeight(); y++)
         {
             yield return new WaitForSecondsRealtime(delay);
             AudioManager.instance.PlaySound(Sound.Type.MapReveal);
             delay = delayStep;
-            for (int x = 0; x < grid.GetHeight(); x++)
+            for (int x = 0; x < grid.GetWidth(); x++)
             {
                 MapGridObject mapGridObject = grid.GetGridObject(x, y);
                 mapGridObject.Reveal();

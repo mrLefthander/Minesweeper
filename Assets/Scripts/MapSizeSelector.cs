@@ -6,7 +6,7 @@ public class MapSizeSelector: MonoBehaviour
 {
     Toggle[] toggles;
 
-    void Awake()
+    void Start()
     {
         toggles = GetComponentsInChildren<Toggle>();
         SetSavedMapSize();

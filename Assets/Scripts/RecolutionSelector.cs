@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,20 +7,35 @@ using TMPro;
 
 public class RecolutionSelector : MonoBehaviour
 {
-    List<Resolution> resolutionsList;
-    TMP_Dropdown resolutionDropdown;
-    Toggle fullscreenToggle;
+    private List<Resolution> resolutionsList;
+    private TMP_Dropdown resolutionDropdown;
+    private Toggle fullscreenToggle;
 
-    bool isPlayingSound = false;
+    private bool isPlayingSound = false;
 
 
     void Start()
     {
         fullscreenToggle = GetComponentInChildren<Toggle>();
+        resolutionDropdown = GetComponentInChildren<TMP_Dropdown>();
+        StartResolutionSelector();
+        DontStartResolutionSelector();
+    }
+
+    [Conditional("UNITY_WEBGL"), Conditional("UNITY_ANDROID")]
+    private void DontStartResolutionSelector()
+    {
+        fullscreenToggle.gameObject.SetActive(false);
+        resolutionDropdown.gameObject.SetActive(false);
+        GetComponentInChildren<TMP_Text>().gameObject.SetActive(false);
+    }
+
+    [Conditional("UNITY_EDITOR"), Conditional("UNITY_STANDALONE")]
+    private void StartResolutionSelector()
+    {
         InitializeResolutionDropdown();
         SetUpInitialValues();
         isPlayingSound = true;
-
     }
 
     private void SetUpInitialValues()
@@ -36,7 +51,6 @@ public class RecolutionSelector : MonoBehaviour
             .Select(r => new Resolution { width = r.width, height = r.height })
                 .Distinct().Reverse().ToList(); 
 
-        resolutionDropdown = GetComponentInChildren<TMP_Dropdown>();
         resolutionDropdown.ClearOptions();
 
         List<string> resolutionStrings = resolutionsList.Select(r => r.width + " x " + r.height).ToList();

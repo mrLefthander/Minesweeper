@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 588579043011316221}
   - component: {fileID: 588579043011316220}
+  - component: {fileID: 3804203324682469806}
+  - component: {fileID: 305306934592149027}
   m_Layer: 0
-  m_Name: LocalizationManager
+  m_Name: LocalizationManagerWebGL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,5 +43,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 618cf713f1a89aa4f971675479df53b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3804203324682469806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588579043011316219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942af5adea9fd144ab7ad228db3725c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &305306934592149027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588579043011316219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 674f3d5f7d6391c4391371939118b62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

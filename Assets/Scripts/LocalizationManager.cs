@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 using System;
+using System.Diagnostics;
 
-public class LocalizationManager : MonoBehaviour
+public class LocalizationManager: MonoBehaviour
 {
     public event Action OnLanguageChange;
+    public event Action OnDataLoaded;
     public enum Language
     {
         English,
@@ -14,9 +15,11 @@ public class LocalizationManager : MonoBehaviour
         Ukrainian
     }
 
-    public static LocalizationManager instance;
+    public static LocalizationManager instance = null;
+
+    public ILocalizationLoader localizationLoader;
     private Dictionary<string, string> localizedText;
-    [SerializeField]
+
     private Language currentLanguage;
     public Language CurrentLanguage
     {
@@ -34,30 +37,27 @@ public class LocalizationManager : MonoBehaviour
     private void Awake()
     {
         SetUpSingleton();
+
+        localizedText = new Dictionary<string, string>();
+
         CurrentLanguage = SettingsPlayerPrefsManager.GetSavedLanguage();
-        LoadLocalizedText();
-        OnLanguageChange += LoadLocalizedText;
+
+        GetLocalizationLoader();
+
+        SubcribeOnEvents();
+
+        if (gameObject.activeSelf) LoadLocalizedText();
     }
 
-    public void LoadLocalizedText()
+    private void SubcribeOnEvents()
     {
-        localizedText = new Dictionary<string, string>();
-        string fileName = GetFileName(currentLanguage);
-        string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
-        if(File.Exists(filePath))
+        localizationLoader.OnDataLoaded += (data) =>
         {
-            string dataAsJson = File.ReadAllText(filePath);
-            LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+            PopulateLocalizedText(data);
+            OnDataLoaded?.Invoke();
+        };
 
-            for(int i = 0; i < loadedData.localizationItems.Length; i++)
-            {
-                localizedText.Add(loadedData.localizationItems[i].key, loadedData.localizationItems[i].value);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Cannot find " + fileName + " localization file");
-        }
+        OnLanguageChange += () => LoadLocalizedText();
     }
 
     public string GetLocalizedValue(string key)
@@ -67,6 +67,19 @@ public class LocalizationManager : MonoBehaviour
             return "missing localized text for: " + key;
         }
         return localizedText[key];
+    }
+
+    private void LoadLocalizedText() => localizationLoader.Load(GetFileName(CurrentLanguage));
+
+    private void PopulateLocalizedText(string dataAsJson)
+    {
+        LocalizationData loadedData = JsonUtility.FromJson<LocalizationData>(dataAsJson);
+        Dictionary<string, string> localizedText = new Dictionary<string, string>();
+        for (int i = 0; i < loadedData.localizationItems.Length; i++)
+        {
+            localizedText.Add(loadedData.localizationItems[i].key, loadedData.localizationItems[i].value);
+        }
+        this.localizedText = localizedText;
     }
 
     private string GetFileName(Language language)
@@ -82,6 +95,18 @@ public class LocalizationManager : MonoBehaviour
                 return "uk_UA.json";
         }
     }
+
+    private void GetLocalizationLoader()
+    {
+        GetDesktopLocalozationLoader();
+        GetWebGLLocalozationLoader();
+    }
+
+    [Conditional("UNITY_STANDALONE")]
+    private void GetDesktopLocalozationLoader() => localizationLoader = GetComponent<LocalizationLoaderDesktop>();
+
+    [Conditional("UNITY_WEBGL"), Conditional("UNITY_ANDROID")]
+    private void GetWebGLLocalozationLoader() => localizationLoader = GetComponent<LocalizationLoaderWebGL>();
 
     private void SetUpSingleton()
     {
