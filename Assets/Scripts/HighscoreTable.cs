@@ -17,6 +17,9 @@ public class HighscoreTable: MonoBehaviour
     private List<Transform> highscoreEntryTransformList;
     private HighscoreHandler highscoreHandler;
 
+    [SerializeField]
+    private float templateHeight = 80f;
+
     private void Awake()
     {
         entryContainer = transform.Find(HIGHSCORE_CONTAINER_OBJECT_NAME);
@@ -31,10 +34,9 @@ public class HighscoreTable: MonoBehaviour
 
     private void CreateHighscoreEntryTransform(HighscoreHandler.HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
     {
-        float templateHeight = 48f;
         Transform entryTransform = Instantiate(entryTemplate, container);
-        RectTransform entrryRectTransform = entryTransform.GetComponent<RectTransform>();
-        entrryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
+        RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+        entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * transformList.Count);
         entryTransform.gameObject.SetActive(true);
         Transform rankTransform = entryTransform.Find(HIGHSCORE_TEMPLATE_RANK_TEXT_NAME);
         Transform scoreTransform = entryTransform.Find(HIGHSCORE_TEMPLATE_SCORE_TEXT_NAME);

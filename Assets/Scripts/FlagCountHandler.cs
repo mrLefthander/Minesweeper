@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class FlagCountHandler : MonoBehaviour
+public class FlagCountHandler: MonoBehaviour
 {
-    [SerializeField] private TMP_Text timerVisual;
+    private const string FLAG_COUNT_VISUAL_OBJECT_NAME = "flagCountText";
+
+    private TMP_Text flagCountVisual;
     private int initialFlagCount;
     private Map map;
+
+    private void Awake()
+    {
+        flagCountVisual = GameObject.Find(FLAG_COUNT_VISUAL_OBJECT_NAME).GetComponent<TMP_Text>();
+    }
 
     public void Setup(Map map)
     {
@@ -24,10 +31,14 @@ public class FlagCountHandler : MonoBehaviour
 
     private void UpdateFlagCountVisual(int amount)
     {
-        timerVisual.text = amount.ToString();
-        if(amount < 0)
+        flagCountVisual.text = amount.ToString();
+        if (amount < 0)
         {
-            timerVisual.color = Color.red;
+            flagCountVisual.color = Color.red;
+        }
+        if (amount >= 0)
+        {
+            flagCountVisual.color = Color.white;
         }
     }
 }

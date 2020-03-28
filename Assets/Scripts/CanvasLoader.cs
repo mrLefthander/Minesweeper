@@ -1,28 +1,41 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using UnityEngine;
 
 public class CanvasLoader : MonoBehaviour
 {
     [SerializeField] private GameObject standaloneCanvasGameObject;
     [SerializeField] private GameObject androidCanvasGameObject;
-    [SerializeField] private Camera UICamera;
 
     void Awake()
     {
+        HideAllCanvas();
+        LoadAppropriateCanvas();
+    }
+
+    private void LoadAppropriateCanvas()
+    {
         LoadStandaloneCanvas();
         LoadAndroidCanvas();
-        GetComponentInChildren<Canvas>().worldCamera = UICamera;
+    }
+
+    private void HideAllCanvas()
+    {
+        standaloneCanvasGameObject.SetActive(false);
+        androidCanvasGameObject.SetActive(false);
     }
 
     [Conditional("UNITY_STANDALONE"), Conditional("UNITY_WEBGL")]
     private void LoadStandaloneCanvas()
     {
-        Instantiate(standaloneCanvasGameObject, gameObject.transform);
+        standaloneCanvasGameObject.SetActive(true);
+        //Instantiate(standaloneCanvasGameObject, gameObject.transform);
     }
 
     [Conditional("UNITY_ANDROID")]
     private void LoadAndroidCanvas()
     {
-        Instantiate(androidCanvasGameObject, gameObject.transform);
+        androidCanvasGameObject.SetActive(true);
+        //Instantiate(androidCanvasGameObject, gameObject.transform);
     }
 }

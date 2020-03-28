@@ -5,11 +5,16 @@ using TMPro;
 
 public class TimerHandler: MonoBehaviour
 {
+    private const string TIMER_VISUAL_OBJECT_NAME = "timerText";
 
-    [SerializeField] private TMP_Text timerVisual;
-
+    private TMP_Text timerVisual;
     private float timer;
     private int score;
+
+    private void Awake()
+    {
+        timerVisual = GameObject.Find(TIMER_VISUAL_OBJECT_NAME).GetComponent<TMP_Text>();
+    }
 
     public void HandleTimer()
     {

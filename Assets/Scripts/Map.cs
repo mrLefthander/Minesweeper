@@ -131,6 +131,7 @@ public class Map
         {
             mapGridObject.Reveal();
             revealedCellsCount++;
+            if (mapGridObject.IsFlagged()) flaggedCellsCount--;
         }
     }
 

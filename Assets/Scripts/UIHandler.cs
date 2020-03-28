@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UIHandler : MonoBehaviour
+public class UIHandler: MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverWindow;
-    [SerializeField] private GameObject gameWinWindow;
-    [SerializeField] private GameObject blocker;
-    [SerializeField] private GameObject pauseWindow;
-    [SerializeField] private InputWindow inputWindow;
+    private const string GAME_OVER_WINDOW_OBJECT_NAME = "GameOverWindow";
+    private const string GAME_WIN_WINDOW_OBJECT_NAME = "GameWinWindow";
+    private const string BLOCKER_OBJECT_NAME = "Blocker";
+    private const string PAUSE_WINDOW_OBJECT_NAME = "PauseWindow";
+
     [SerializeField] private HighscoreHandler highscoreHandler;
+
+    private GameObject gameOverWindow;
+    private GameObject gameWinWindow;
+    private GameObject blocker;
+    private GameObject pauseWindow;
+    private InputWindow inputWindow;
+    private Canvas canvas;
 
     private void Awake()
     {
-        //gameOverWindow = transform.Find("Canvas/GameOverWindow").gameObject;
-        //gameWinWindow = transform.Find("Canvas/GameWinWindow").gameObject;
-        //blocker = transform.Find("Canvas/Blocker").gameObject;
-        //pauseWindow = transform.Find("Canvas/PauseWindow").gameObject;
-        //inputWindow = GetComponentInChildren<InputWindow>(true);
-        //highscoreHandler = FindObjectOfType<HighscoreHandler>();
+        canvas = GetComponentInChildren<Canvas>();
+
+        gameOverWindow = canvas.transform.Find(GAME_OVER_WINDOW_OBJECT_NAME).gameObject;
+        gameWinWindow = canvas.transform.Find(GAME_WIN_WINDOW_OBJECT_NAME).gameObject;
+        blocker = canvas.transform.Find(BLOCKER_OBJECT_NAME).gameObject;
+        pauseWindow = canvas.transform.Find(PAUSE_WINDOW_OBJECT_NAME).gameObject;
+
+        inputWindow = canvas.GetComponentInChildren<InputWindow>();
 
         HideAll();
     }
