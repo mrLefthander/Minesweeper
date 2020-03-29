@@ -9,17 +9,11 @@ public class MinesweeperGameHandler: MonoBehaviour
     [SerializeField] private UIHandler uiHandler;
     [SerializeField] private TimerHandler timer;
     [SerializeField] private FlagCountHandler flagCountHandler;
- //   [SerializeField] private CameraControlsAndroid cameraControls;
 
     private Map map;
     private bool isGameActive;
     private bool isPaused;
     private IInputHandler inputHandler;
-
-    //float touchTime = 0f;
-    //bool newTouch = false;
-    //Vector2 touchZeroStartWorldPosition;
-    //float touchDeltaPositionThreshold = 10f;
 
     void Start()
     {
@@ -32,13 +26,10 @@ public class MinesweeperGameHandler: MonoBehaviour
         isPaused = false;
         flagCountHandler.Setup(map);
 
-        SetInputHandler();
-        HandleAndroidInput();
+        CreateInputHandler();
 
         map.OnEntireMapRevealed += Map_OnEntireMapRevealed;
     }
-
-
 
     private void Map_OnEntireMapRevealed(object sender, EventArgs e)
     {
@@ -56,7 +47,7 @@ public class MinesweeperGameHandler: MonoBehaviour
                 timer.HandleTimer();
 
                 HandleStandaloneInput();
-                inputHandler.HandleInput(RevealAtPosition, FlagAtPosition, true, gridPrefabVisual.SetRevealMap);
+                inputHandler.HandleInput();
             }
 
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Pause))
@@ -67,36 +58,22 @@ public class MinesweeperGameHandler: MonoBehaviour
 
     }
 
-    private void SetInputHandler()
+    private void CreateInputHandler()
     {
         HandleAndroidInput();
         HandleStandaloneInput();
-
     }
 
     [Conditional("UNITY_ANDROID")]
     private void HandleAndroidInput()
     {
-        inputHandler = gameObject.AddComponent<TouchInputHandler>();
+        inputHandler = new TouchInputHandler(RevealAtPosition, FlagAtPosition, true, gridPrefabVisual.SetRevealMap);
     }
 
     [Conditional("UNITY_STANDALONE"), Conditional("UNITY_WEBGL")]
     private void HandleStandaloneInput()
     {
-        inputHandler = gameObject.AddComponent<TouchInputHandler>();
-    }
-
-    [Conditional("UNITY_STANDALONE"), Conditional("UNITY_WEBGL")]
-    private void EnableStandaloneDebug(bool isEnabled)
-    {
-        if (isEnabled)
-        {
-            if (Input.GetKeyDown(KeyCode.D))
-                gridPrefabVisual.SetRevealMap(true);
-            
-            if (Input.GetKeyUp(KeyCode.D)) 
-                gridPrefabVisual.SetRevealMap(false);
-        }
+        inputHandler = new MouseAndKeyboardInputHandler(RevealAtPosition, FlagAtPosition, true, gridPrefabVisual.SetRevealMap);
     }
 
     private void FlagAtPosition(Vector2 worldPosition)
@@ -115,18 +92,6 @@ public class MinesweeperGameHandler: MonoBehaviour
             StartCoroutine(uiHandler.LoseCoroutine(2f));
         }
         flagCountHandler.UpdateFlagCount();
-    }
-
-    private Vector3 GetInputWorldPosition(Vector3 position)
-    {
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-        worldPosition.z = 0f;
-        return worldPosition;
-    }
-
-    private Vector3 GetMouseWorldPosition()
-    {
-        return GetInputWorldPosition(Input.mousePosition);
     }
 
     public void ChangePauseState()

@@ -282,18 +282,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420030 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8783491317392285652, guid: 9c50469c315df0b42a715967f5194521,
-    type: 3}
-  m_PrefabInstance: {fileID: 8783491317210589098}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e12ff7b76a9cd3f42856304459868e2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &879963346
 GameObject:
   m_ObjectHideFlags: 0
@@ -11677,8 +11665,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7053260167541844574}
   - component: {fileID: 7053260167541844573}
-  - component: {fileID: 7053260167541844575}
-  - component: {fileID: 7053260167541844576}
   m_Layer: 0
   m_Name: MinesweeperGameHandler
   m_TagString: Untagged
@@ -11716,31 +11702,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7053260167541844575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7053260167541844572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 190d6b8876bc2c543a5318aa045092ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraControls: {fileID: 519420030}
---- !u!114 &7053260167541844576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7053260167541844572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de4b2698f871edf4a9d6b6a81d1d87fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8783491317210589098
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,29 +3,33 @@
 using System;
 using UnityEngine;
 
-public class TouchInputHandler: MonoBehaviour, IInputHandler
+public class TouchInputHandler: IInputHandler
 {
-    [SerializeField] private CameraControlsAndroid cameraControls;
+    private readonly Action<Vector2> OnPrimaryInput;
+    private readonly Action<Vector2> OnSecondatyInput;
+    private readonly bool enableDebug;
+    private readonly Action<bool> OnDebugInput;
+    private readonly CameraControlsAndroid cameraControls;
 
-    Action<Vector2> OnPrimaryInput;
-    Action<Vector2> OnSecondatyInput;
-    bool enableDebug = false;
-    Action<bool> OnDebugInput = null;
+    private readonly float timeToLongTouch = 0.5f;
+    private readonly float touchDeltaPositionThreshold = 10f;
+    private readonly float sameTouchWorldPositionDistance = 3f;
 
-    float touchTime = 0f;
-    bool newTouch = false;
-    Vector2 touchZeroStartWorldPosition;
+    private float touchTime = 0f;
+    private bool newTouch = false;
+    private Vector2 touchZeroStartWorldPosition;
 
-    readonly float timeToLongTouch = 0.5f;
-    readonly float touchDeltaPositionThreshold = 10f;
-    readonly float sameWorldPositionDistance = 3f;
-
-    private void Start()
+    public TouchInputHandler(Action<Vector2> OnPrimaryInput, Action<Vector2> OnSecondatyInput, bool enableDebug = false, Action<bool> OnDebugInput = null)
     {
-        cameraControls = FindObjectOfType<CameraControlsAndroid>();
+        this.OnPrimaryInput = OnPrimaryInput;
+        this.OnSecondatyInput = OnSecondatyInput;
+        this.enableDebug = enableDebug;
+        this.OnDebugInput = OnDebugInput;
+
+        cameraControls = new CameraControlsAndroid();
     }
 
-    public void HandleInput(Action<Vector2> OnPrimaryInput, Action<Vector2> OnSecondatyInput, bool enableDebug = false, Action<bool> OnDebugInput = null)
+    public void HandleInput()
     {
         if (Input.touchCount > 0)
         {
@@ -40,6 +44,7 @@ public class TouchInputHandler: MonoBehaviour, IInputHandler
                 cameraControls.Zoom(CalculateZoomDistance(touchZero, touchOne));
                 newTouch = false;
             }
+
             if (IsTouchStart(touchZero))
             {
                 touchZeroStartWorldPosition = Camera.main.ScreenToWorldPoint(touchZero.position);
@@ -51,7 +56,6 @@ public class TouchInputHandler: MonoBehaviour, IInputHandler
             {
                 Vector2 touchDeltaPosition = touchZero.deltaPosition;
                 cameraControls.Pan(touchDeltaPosition);
-
                 newTouch = false;
             }
 
@@ -62,6 +66,7 @@ public class TouchInputHandler: MonoBehaviour, IInputHandler
                 if (newTouch && IsOnSameWorldPosition(touchZeroCurrentWorldPosition))
                 {
                     OnSecondatyInput(touchZeroStartWorldPosition);
+                    Vibrator.Vibrate(100);
                 }
                 newTouch = false;
             }
@@ -98,12 +103,12 @@ public class TouchInputHandler: MonoBehaviour, IInputHandler
 
     private bool IsOnSameWorldPosition(Vector2 touchZeroCurrentWorldPosition)
     {
-        return Vector2.Distance(touchZeroStartWorldPosition, touchZeroCurrentWorldPosition) <= sameWorldPositionDistance;
+        return Vector2.Distance(touchZeroStartWorldPosition, touchZeroCurrentWorldPosition) <= sameTouchWorldPositionDistance;
     }
 
     private bool IsShortTouch(Touch touchZero)
     {
-        return touchTime > 0 && Time.time - touchTime < timeToLongTouch && touchZero.phase == TouchPhase.Ended;
+        return touchTime > 0 && Time.time - touchTime < timeToLongTouch && touchZero.phase == TouchPhase.Ended && newTouch;
     }
 
     private bool IsLongTouch(Touch touchZero)

@@ -91,11 +91,11 @@ public class GameValuesController : MonoBehaviour
         {
             default:
             case GameValuesController.MapSize.Small:
-                return new Vector2Int(6, 9);
+                return new Vector2Int(7, 10);
             case GameValuesController.MapSize.Medium:
-                return new Vector2Int(7, 11);
+                return new Vector2Int(10, 15);
             case GameValuesController.MapSize.Large:
-                return new Vector2Int(8, 13);
+                return new Vector2Int(13, 20);
         }
 #endif
     }

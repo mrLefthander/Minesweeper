@@ -3,9 +3,29 @@
 using System;
 using UnityEngine;
 
-public class MouseAndKeyboardInputHandler : MonoBehaviour, IInputHandler
+public class MouseAndKeyboardInputHandler: IInputHandler
 {
-    public void HandleInput(Action<Vector2> OnPrimaryInput, Action<Vector2> OnSecondatyInput, bool enableDebug = false, Action<bool> OnDebugInput = null)
+    private readonly Action<Vector2> OnPrimaryInput;
+    private readonly Action<Vector2> OnSecondatyInput;
+    private readonly bool enableDebug;
+    private readonly Action<bool> OnDebugInput;
+
+    public MouseAndKeyboardInputHandler(Action<Vector2> OnPrimaryInput, Action<Vector2> OnSecondatyInput, bool enableDebug = false, Action<bool> OnDebugInput = null)
+    {
+        this.OnPrimaryInput = OnPrimaryInput;
+        this.OnSecondatyInput = OnSecondatyInput;
+        this.enableDebug = enableDebug;
+        this.OnDebugInput = OnDebugInput;
+    }
+
+    public void HandleInput()
+    {
+        MouseControls();
+
+        EnableDebug(enableDebug, OnDebugInput);
+    }
+
+    private void MouseControls()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -15,8 +35,6 @@ public class MouseAndKeyboardInputHandler : MonoBehaviour, IInputHandler
         {
             OnSecondatyInput(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
-
-        EnableDebug(enableDebug, OnDebugInput);
     }
 
     private void EnableDebug(bool enableDebug, Action<bool> OnDebugInput)
