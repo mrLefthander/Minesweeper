@@ -6,22 +6,48 @@ using System;
 
 public class VolumeController : MonoBehaviour
 {
+#if UNITY_STANDALONE || UNITY_WEBGL
     private Slider volumeSlider;
     private TMP_Text volumeText;
+#elif UNITY_ANDROID
+    private Toggle muteToggle;
+#endif
 
     private void Start()
     {
+        InitializeControls();
+    }
+
+    private void InitializeControls()
+    {
+#if UNITY_STANDALONE || UNITY_WEBGL
+        LoadStandaloneControls();
+#elif UNITY_ANDROID
+        LoadAndroidControls();
+#endif
+    }
+
+    public void SaveCurrentVolume()
+    {
+        SettingsPlayerPrefsManager.SaveVolume(AudioManager.instance.volume);
+    }
+
+    public void PlayPointerUpSound()
+    {
+        AudioManager.instance.PlaySound(Sound.Type.ToggleClick);
+    }
+
+
+#if UNITY_STANDALONE || UNITY_WEBGL
+    private void LoadStandaloneControls()
+    {
         volumeSlider = GetComponentInChildren<Slider>();
         volumeText = volumeSlider.GetComponentInChildren<TMP_Text>();
-
         volumeSlider.onValueChanged.AddListener(OnSliderValueChange);
-
-        HideVolumeTextOnAndroid();
-
         SetSliderValue();
         SetVolumeTextValue();
     }
-
+    
     private void SetVolumeTextValue()
     {
         float scaledVolumeValue = volumeSlider.value * 100;
@@ -39,21 +65,30 @@ public class VolumeController : MonoBehaviour
         SetVolumeTextValue();
     }
 
-    public void SaveCurrentVolume()
+#elif UNITY_ANDROID
+    private void LoadAndroidControls()
     {
-        GameValuesController.instance.volume = volumeSlider.value;
-        SettingsPlayerPrefsManager.SaveVolume(volumeSlider.value);
+        muteToggle = GetComponentInChildren<Toggle>();
+        muteToggle.onValueChanged.AddListener(OnMuteToggleChange);
+        SetToggleValue();
     }
 
-    public void PlayPointerUpSound()
+    private void SetToggleValue()
     {
-        AudioManager.instance.PlaySound(Sound.Type.ToggleClick);
+        muteToggle.isOn = AudioManager.instance.volume != 0.0001f ? false : true;
     }
 
-    [Conditional("UNITY_ANDROID")]
-    private void HideVolumeTextOnAndroid()
+    public void OnMuteToggleChange(bool isOn)
     {
-        volumeText.gameObject.SetActive(false);
+        if (isOn)
+        {
+            AudioManager.instance.SetVolume(0.0001f);
+        }
+        else
+        {
+            AudioManager.instance.SetVolume(1f);
+        }
     }
+#endif
 
 }

@@ -23,21 +23,12 @@ public class GameValuesController : MonoBehaviour
 
     public GameValuesController.Difficulty difficulty;
     public GameValuesController.MapSize mapSize;
-    public float volume;
-
-    private const string AUDIOMIXER_EXPOSED_VAR_NAME = "volume";
-    [SerializeField] private AudioMixer mainMixer;
 
     private void Awake()
     {
         SetUpSingleton();
         difficulty = SettingsPlayerPrefsManager.GetSavedDifficulty();
         mapSize = SettingsPlayerPrefsManager.GetSavedMapSize();
-        volume = SettingsPlayerPrefsManager.GetSavedVolume();
-    }
-    private void Start()
-    {
-        SetVolume(volume);
     }
 
     private void SetUpSingleton()
@@ -84,9 +75,7 @@ public class GameValuesController : MonoBehaviour
             case GameValuesController.MapSize.Large:
                 return new Vector2Int(15, 15);
         }
-#endif
-
-#if UNITY_ANDROID
+#elif UNITY_ANDROID
         switch (mapSize)
         {
             default:
@@ -98,10 +87,5 @@ public class GameValuesController : MonoBehaviour
                 return new Vector2Int(13, 20);
         }
 #endif
-    }
-
-    public void SetVolume(float sliderValue)
-    {
-        mainMixer.SetFloat(AUDIOMIXER_EXPOSED_VAR_NAME, Mathf.Log10(sliderValue) * 20);
     }
 }

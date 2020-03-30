@@ -1,6 +1,4 @@
-﻿#if UNITY_STANDALONE || UNITY_WEBGL
-
-using System;
+﻿using System;
 using UnityEngine;
 
 public class MouseAndKeyboardInputHandler: IInputHandler
@@ -50,4 +48,3 @@ public class MouseAndKeyboardInputHandler: IInputHandler
     }
 
 }
-#endif

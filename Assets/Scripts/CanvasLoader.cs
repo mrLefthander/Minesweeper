@@ -29,13 +29,11 @@ public class CanvasLoader : MonoBehaviour
     private void LoadStandaloneCanvas()
     {
         standaloneCanvasGameObject.SetActive(true);
-        //Instantiate(standaloneCanvasGameObject, gameObject.transform);
     }
 
     [Conditional("UNITY_ANDROID")]
     private void LoadAndroidCanvas()
     {
         androidCanvasGameObject.SetActive(true);
-        //Instantiate(androidCanvasGameObject, gameObject.transform);
     }
 }

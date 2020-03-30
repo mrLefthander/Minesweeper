@@ -1,6 +1,4 @@
-﻿#if UNITY_ANDROID
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraControlsAndroid
 {
@@ -57,4 +55,3 @@ public class CameraControlsAndroid
         Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - difference * cameraSpeed, cameraZoomBounds[0], cameraZoomBounds[1]);
     }
 }
-#endif

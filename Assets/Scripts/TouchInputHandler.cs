@@ -1,6 +1,4 @@
-﻿#if UNITY_ANDROID
-
-using System;
+﻿using System;
 using UnityEngine;
 
 public class TouchInputHandler: IInputHandler
@@ -126,4 +124,3 @@ public class TouchInputHandler: IInputHandler
         return touchZero.phase != TouchPhase.Ended && touchZero.phase == TouchPhase.Moved && touchZero.deltaPosition.magnitude >= touchDeltaPositionThreshold;
     }
 }
-#endif

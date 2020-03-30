@@ -5,14 +5,23 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
+    private const string AUDIOMIXER_EXPOSED_VAR_NAME = "volume";
 
+    [SerializeField] private AudioMixer mainMixer;
+    public float volume;
     public Sound[] sounds;
+
     private AudioSource audioSource;
 
     private void Awake()
     {
         SetUpSingleton();
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        SetVolume(SettingsPlayerPrefsManager.GetSavedVolume());
     }
 
     public void PlaySound(Sound.Type soundName)
@@ -61,6 +70,12 @@ public class AudioManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void SetVolume(float sliderValue)
+    {
+        volume = sliderValue;
+        mainMixer.SetFloat(AUDIOMIXER_EXPOSED_VAR_NAME, Mathf.Log10(volume) * 20);
     }
 
 }
