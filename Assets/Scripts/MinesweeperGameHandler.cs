@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class MinesweeperGameHandler: MonoBehaviour
@@ -34,7 +34,6 @@ public class MinesweeperGameHandler: MonoBehaviour
     private void Map_OnEntireMapRevealed(object sender, EventArgs e)
     {
         isGameActive = false;
-
         StartCoroutine(uiHandler.WinCoroutine(timer.GetScore()));
     }
 
@@ -58,24 +57,6 @@ public class MinesweeperGameHandler: MonoBehaviour
 
     }
 
-    private void CreateInputHandler()
-    {
-        HandleAndroidInput();
-        HandleStandaloneInput();
-    }
-
-    [Conditional("UNITY_ANDROID")]
-    private void HandleAndroidInput()
-    {
-        inputHandler = new TouchInputHandler(RevealAtPosition, FlagAtPosition, true, gridPrefabVisual.SetRevealMap);
-    }
-
-    [Conditional("UNITY_STANDALONE"), Conditional("UNITY_WEBGL")]
-    private void HandleStandaloneInput()
-    {
-        inputHandler = new MouseAndKeyboardInputHandler(RevealAtPosition, FlagAtPosition, true, gridPrefabVisual.SetRevealMap);
-    }
-
     private void FlagAtPosition(Vector2 worldPosition)
     {
         map.ChangeFlaggedStateOnGridPosition(worldPosition);
@@ -88,17 +69,39 @@ public class MinesweeperGameHandler: MonoBehaviour
         if (gridObjectType == MapGridObject.Type.Mine)
         {
             isGameActive = false;
-            StartCoroutine(map.RevealEntireMap(2f));
-            StartCoroutine(uiHandler.LoseCoroutine(2f));
+            StartCoroutine(GameOverCoroutine());
         }
         flagCountHandler.UpdateFlagCount();
+    }
+
+    private IEnumerator GameOverCoroutine()
+    {
+        yield return StartCoroutine(map.RevealEntireMap());
+        uiHandler.ShowLoseWindow();
     }
 
     public void ChangePauseState()
     {
         AudioManager.instance.PlaySound(Sound.Type.ButtonClick);
         isPaused = !isPaused;
-        if (uiHandler == null) UnityEngine.Debug.Log("null");
         uiHandler.ShowPauseWindow(isPaused);
+    }
+
+    private void CreateInputHandler()
+    {
+        HandleAndroidInput();
+        HandleStandaloneInput();
+    }
+
+    [Conditional("UNITY_ANDROID")]
+    private void HandleAndroidInput()
+    {
+        inputHandler = new TouchInputHandler(RevealAtPosition, FlagAtPosition);
+    }
+
+    [Conditional("UNITY_STANDALONE"), Conditional("UNITY_WEBGL")]
+    private void HandleStandaloneInput()
+    {
+        inputHandler = new MouseAndKeyboardInputHandler(RevealAtPosition, FlagAtPosition);
     }
 }

@@ -163,27 +163,24 @@ public class Map
         return (revealedCellsCount == emptyCellsCount && flaggedCellsCount == minesCount) ? true : false;
     }
 
-
-
-    public IEnumerator RevealEntireMap(float totalDelay)
+    public IEnumerator RevealEntireMap()
     {
-        float delayStep = totalDelay / (grid.GetWidth() + 5f);
-        float delay = delayStep * 4f;
-
+        float delayStep = 0.15f;
+        yield return new WaitForSecondsRealtime(delayStep * 3f);
         for (int y = 0; y < grid.GetHeight(); y++)
         {
-            yield return new WaitForSecondsRealtime(delay);
             AudioManager.instance.PlaySound(Sound.Type.MapReveal);
-            delay = delayStep;
+
+            if (y % 2 == 1)
+                yield return new WaitForSecondsRealtime(delayStep);
+            
             for (int x = 0; x < grid.GetWidth(); x++)
             {
                 MapGridObject mapGridObject = grid.GetGridObject(x, y);
                 mapGridObject.Reveal();
             }
         }
-        yield return new WaitForSecondsRealtime(delayStep);
         AudioManager.instance.PlaySound(Sound.Type.GameLose);
-
     }
 
     private List<MapGridObject> GetNeighbourList(MapGridObject gridObject)

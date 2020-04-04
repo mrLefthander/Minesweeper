@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class UIHandler: MonoBehaviour
 {
@@ -52,12 +50,11 @@ public class UIHandler: MonoBehaviour
             inputWindow.Show(score);
         }
         gameWinWindow.SetActive(true);
-        
+
     }
 
-    public IEnumerator LoseCoroutine(float delay)
+    public void ShowLoseWindow()
     {
-        yield return new WaitForSeconds(delay);
         blocker.SetActive(true);
         gameOverWindow.SetActive(true);
     }

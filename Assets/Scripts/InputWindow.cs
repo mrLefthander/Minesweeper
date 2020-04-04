@@ -1,13 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using System.Text.RegularExpressions;
 
 public class InputWindow: MonoBehaviour
 {
+    const string OK_BUTTON_OBJECT_NAME = "okButton";
+    const string CANCEL_BUTTON_OBJECT_NAME = "cancelButton";
+    const string INPUT_FIELD_OBJECT_NAME = "inputField";
+    const string HIGHSCORE_TEXT_OBJECT_NAME = "highscoreText";
+
     private TMP_InputField inputField;
     private Button okButton;
     private Button cancelButton;
@@ -17,10 +19,10 @@ public class InputWindow: MonoBehaviour
 
     private void Awake()
     {
-        okButton = transform.Find("okButton").GetComponent<Button>();
-        cancelButton = transform.Find("cancelButton").GetComponent<Button>();
-        inputField = transform.Find("inputField").GetComponent<TMP_InputField>();
-        highscoreText = transform.Find("highscoreText").GetComponent<TMP_Text>();
+        okButton = transform.Find(OK_BUTTON_OBJECT_NAME).GetComponent<Button>();
+        cancelButton = transform.Find(CANCEL_BUTTON_OBJECT_NAME).GetComponent<Button>();
+        inputField = transform.Find(INPUT_FIELD_OBJECT_NAME).GetComponent<TMP_InputField>();
+        highscoreText = transform.Find(HIGHSCORE_TEXT_OBJECT_NAME).GetComponent<TMP_Text>();
         highscoreHandler = FindObjectOfType<HighscoreHandler>();
     }
     private void Update()
