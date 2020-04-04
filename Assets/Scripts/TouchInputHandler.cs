@@ -64,7 +64,6 @@ public class TouchInputHandler: IInputHandler
                 if (newTouch && IsOnSameWorldPosition(touchZeroCurrentWorldPosition))
                 {
                     OnSecondatyInput(touchZeroStartWorldPosition);
-                    Vibrator.Vibrate(100);
                 }
                 newTouch = false;
             }
