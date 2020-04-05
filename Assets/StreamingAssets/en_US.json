@@ -20,7 +20,7 @@
 	{"key":"highscores_label_score","value":"Score"},
 	{"key":"highscores_label_rank","value":"Rank"},
 	{"key":"highscores_reset_button","value":"Reset"},
-	{"key":"new_highscore_title","value":"You goat a new highscore!"},
+	{"key":"new_highscore_title","value":"You got a new highscore!"},
 	{"key":"new_highscore_enter_name","value":"Your name:"},
 	{"key":"cancel_button","value":"Cancel"},
 	{"key":"ok_button","value":"OK"},
@@ -31,5 +31,6 @@
 	{"key":"play_again_button","value":"Play again"},
 	{"key":"pause_title","value":"Pause"},
 	{"key":"restart_button","value":"Restart"},
-	{"key":"resume_button","value":"Resume"}
+	{"key":"resume_button","value":"Resume"},
+	{"key":"settings_sound","value":"Sound"}
 ]}

@@ -31,5 +31,6 @@
 	{"key":"play_again_button","value":"Іще"},
 	{"key":"pause_title","value":"Пауза"},
 	{"key":"restart_button","value":"Заново"},
-	{"key":"resume_button","value":"Продовжити"}
+	{"key":"resume_button","value":"Продовжити"},
+	{"key":"settings_sound","value":"Звук"}
 ]}

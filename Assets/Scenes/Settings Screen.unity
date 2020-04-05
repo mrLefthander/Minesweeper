@@ -9938,7 +9938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f657237edbbbc7a488df372e12369186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: settings_volume
+  key: settings_sound
 --- !u!224 &8684287397889138963
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9984,7 +9984,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Volume
+  m_text: Sound
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34f27556840300743975b5c198fabeef, type: 2}
   m_sharedMaterial: {fileID: 741245879610923708, guid: 34f27556840300743975b5c198fabeef,
@@ -10054,7 +10054,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 8684287397889138965}
-    characterCount: 6
+    characterCount: 5
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
