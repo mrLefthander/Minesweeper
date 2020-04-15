@@ -14,13 +14,16 @@ public static class Vibrator
 
     public static void Vibrate(long milliseconds = 100)
     {
-        if (Application.isEditor)
+        if (AudioManager.instance.isVibrating)
         {
-            Handheld.Vibrate();
-        }
-        else
-        {
-            vibrator.Call("vibrate", milliseconds);
+            if (Application.isEditor)
+            {
+                Handheld.Vibrate();
+            }
+            else
+            {
+                vibrator.Call("vibrate", milliseconds);
+            }
         }
     }
 }

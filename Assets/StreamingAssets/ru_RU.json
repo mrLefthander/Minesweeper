@@ -17,7 +17,7 @@
 	{"key":"highscores_title","value":"Рекорды"},
 	{"key":"main_menu_quit","value":"Выйти"},
 	{"key":"highscores_label_name","value":"Имя"},
-	{"key":"highscores_label_score","value":"Очки"},
+	{"key":"highscores_label_score","value":"Время"},
 	{"key":"highscores_label_rank","value":"Ранг"},
 	{"key":"highscores_reset_button","value":"Очистить"},
 	{"key":"new_highscore_title","value":"У тебя новый рекорд!"},
@@ -32,5 +32,6 @@
 	{"key":"pause_title","value":"Пауза"},
 	{"key":"restart_button","value":"Заново"},
 	{"key":"resume_button","value":"Продолжить"},
-	{"key":"settings_sound","value":"Звук"}
+	{"key":"settings_sound","value":"Звук"},
+	{"key":"settings_vibration","value":"Вибрация"}
 ]}

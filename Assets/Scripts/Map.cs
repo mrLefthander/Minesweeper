@@ -142,7 +142,7 @@ public class Map
         {
             AudioManager.instance.PlaySound(Sound.Type.FlagCell);
 #if UNITY_ANDROID
-            Vibrator.Vibrate(100);
+            Vibrator.Vibrate(70);
 #endif
             mapGridObject.ChangeFlaggedState();
             if (mapGridObject.IsFlagged())

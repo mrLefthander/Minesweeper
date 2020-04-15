@@ -17,7 +17,7 @@
 	{"key":"highscores_title","value":"Highscores"},
 	{"key":"main_menu_quit","value":"Quit"},
 	{"key":"highscores_label_name","value":"Name"},
-	{"key":"highscores_label_score","value":"Score"},
+	{"key":"highscores_label_score","value":"Time"},
 	{"key":"highscores_label_rank","value":"Rank"},
 	{"key":"highscores_reset_button","value":"Reset"},
 	{"key":"new_highscore_title","value":"You got a new highscore!"},
@@ -32,5 +32,6 @@
 	{"key":"pause_title","value":"Pause"},
 	{"key":"restart_button","value":"Restart"},
 	{"key":"resume_button","value":"Resume"},
-	{"key":"settings_sound","value":"Sound"}
+	{"key":"settings_sound","value":"Sound"},
+	{"key":"settings_vibration","value":"Vibration"}
 ]}

@@ -6,6 +6,7 @@ public class SettingsPlayerPrefsManager
     const string DIFFICULTY_PLAYERPREFS_KEY = "difficulty";
     const string MAP_SIZE_PLAYERPREFS_KEY = "map size";
     const string VOLUME_PLAYERPREFS_KEY = "volume";
+    const string VIBRATION_PLAYERPREFS_KEY = "vibration";
     const string FULLSCREEN_PLAYERPREFS_KEY = "fullscreen";
     const string RESOLUTION_INDEX_PLAYERPREFS_KEY = "resolution index";
     const string LANGUAGE_PLAYERPREFS_KEY = "localization";
@@ -83,5 +84,15 @@ public class SettingsPlayerPrefsManager
     public static void SaveLanguage(LocalizationManager.Language language)
     {
         PlayerPrefs.SetString(LANGUAGE_PLAYERPREFS_KEY, language.ToString());
+    }
+
+    public static bool GetSavedIsVibrating()
+    {
+        return PlayerPrefs.GetInt(VIBRATION_PLAYERPREFS_KEY, 1) > 0;
+    }
+
+    public static void SaveIsVibrating(bool isVibrating)
+    {
+        PlayerPrefs.SetInt(VOLUME_PLAYERPREFS_KEY, isVibrating ? 1 : 0);
     }
 }

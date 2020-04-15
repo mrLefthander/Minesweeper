@@ -9,7 +9,11 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioMixer mainMixer;
     public float volume;
+#if UNITY_ANDROID
+    public bool isVibrating;
+#endif
     public Sound[] sounds;
+
 
     private AudioSource audioSource;
 
@@ -22,6 +26,9 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         SetVolume(SettingsPlayerPrefsManager.GetSavedVolume());
+#if UNITY_ANDROID
+        isVibrating = SettingsPlayerPrefsManager.GetSavedIsVibrating();
+#endif
     }
 
     public void PlaySound(Sound.Type soundName)
